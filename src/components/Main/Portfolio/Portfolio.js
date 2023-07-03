@@ -7,7 +7,7 @@ export default function Portfolio() {
       <ul className='portfolio__projects'>
         <li className='portfolio__project'>
           <a
-            href='https://alexsaushkin.github.io/how-to-learn/'
+            href='https://github.com/alexsaushkin/how-to-learn'
             className='portfolio__project-link'
             target='_blank'
             rel='noreferrer'
@@ -30,7 +30,7 @@ export default function Portfolio() {
         <li className='portfolio__project'>
           <a
             className='portfolio__project-link'
-            href='https://alexsaushkin.github.io/express-mesto-gha/'
+            href='https://github.com/alexsaushkin/express-mesto-gha'
             target='_blank'
             rel='noreferrer'
           >
