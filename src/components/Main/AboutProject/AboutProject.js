@@ -1,6 +1,11 @@
-export default function AboutProject({ref_object}) {
+export default function AboutProject() {
   return (
-    <section ref={ref_object} className='about-project' id='about-project'>
+    <section className='about-project' id='about-project'>
+      <p>About Project</p>
+      <p>About Project</p>
+      <p>About Project</p>
+      <p>About Project</p>
+      <p>About Project</p>
     </section>
   )
 }

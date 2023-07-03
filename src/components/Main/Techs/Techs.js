@@ -1,6 +1,13 @@
-export default function Techs({ref_object}) {
+export default function Techs() {
   return (
-    <section ref={ref_object}  className='techs' id='techs'>
+    <section className='techs' id='techs'>
+      <p>About Techs</p>
+      <p>About Techs</p>
+      <p>About Techs</p>
+      <p>About Techs</p>
+      <p>About Techs</p>
+      <p>About Techs</p>
+      <p>About Techs</p>
     </section>
   )
 }

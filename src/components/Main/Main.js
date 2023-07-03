@@ -7,23 +7,13 @@ import Portfolio from './Portfolio/Portfolio';
 import './Main.css';
 
 
-export default function Main({handleClickNav, menuItems, aboutProjectRef, techsRef, aboutMeRef}) {
+export default function Main() {
   return (
     <main className='main'>
-      <Promo
-        onClickNav={handleClickNav}
-        menuItems={menuItems}
-      />
-      <AboutProject
-        refObject={aboutProjectRef}
-      />
-      <Techs
-        refObject={techsRef}
-      />
-      <AboutMe
-        refObject={aboutMeRef}
-      />
-      <Portfolio/>
+      <Promo/>
+      <AboutProject/>
+      <Techs/>
+      <AboutMe/>
     </main>
   )
 }

@@ -12,6 +12,8 @@
 }
 
 .nav-tab__menu-item {
+  display: block;
+  text-decoration: none;
   width: 96px;
   border: none;
   border-radius: 10px;

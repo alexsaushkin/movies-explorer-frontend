@@ -1,17 +1,31 @@
-import './NavTab.css';
+import "./NavTab.css";
 
-export default function NavTab({onClickNav, menuItems}) {
-  const menuElements = menuItems.map((menuData, i) => (
-    <li key={menuData.id}>
-      <button onClick={onClickNav(menuData.element)} className='nav-tab__menu-item'>{menuData.name}</button>
-    </li>
-  ));
-
+export default function NavTab() {
   return (
-    <section className='nav-tab'>
-      <ul className='nav-tab__menu'>
-        { menuElements }
+    <section className="nav-tab">
+      <ul className="nav-tab__menu">
+          <li key='about-project'>
+            <a href="#about-project"
+              className="nav-tab__menu-item"
+            >
+              О прокте
+            </a>
+          </li>
+          <li key='techs'>
+            <a href="#techs"
+              className="nav-tab__menu-item"
+            >
+              Технологии
+            </a>
+          </li>
+          <li key='about-me'>
+            <a href="#about-me"
+              className="nav-tab__menu-item"
+            >
+              Студент
+            </a>
+          </li>
       </ul>
     </section>
-  )
+  );
 }
