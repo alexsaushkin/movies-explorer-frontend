@@ -1,0 +1,31 @@
+.search {
+  border-radius: 9px;
+  background: #F9F9F9;
+  min-height: 72px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px 0 19px;
+}
+
+.search__form {
+  display: flex;
+}
+
+.search__submit {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: url("../../images/find-min.svg");
+  align-self: center;
+  color: #FFFFFF;
+  padding: 0;
+  transition: opacity 0.3s ease-in;
+  cursor: pointer;
+}
+
+.search__submit:hover {
+  opacity: 0.8;
+}

@@ -1,5 +1,5 @@
 import './Techs.css';
-import BlockTitle from "../BlockTitle/BlockTitle";
+import BlockTitle from '../BlockTitle/BlockTitle';
 
 export default function Techs() {
   return (
