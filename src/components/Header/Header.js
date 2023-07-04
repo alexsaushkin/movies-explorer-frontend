@@ -41,7 +41,7 @@ export default function Header({signedIn}) {
             <Link to='/signup' className='header__signup-link'>Регистрация</Link>
           </li>
           <li>
-            <Link to='/signin' className='header__signup-link header__signin-link_color_green'>Войти</Link>
+            <Link to='/signin' className='header__signup-link header__signup-link_color_green'>Войти</Link>
           </li>
         </ul>
       )}
