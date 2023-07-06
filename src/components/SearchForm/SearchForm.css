@@ -1,7 +1,13 @@
 .search {
+  padding: 70px 0 70px;
+  margin: 0 70px 0;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.search__form {
+  min-height: 72px;
   border-radius: 9px;
   background: #F9F9F9;
-  min-height: 72px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -9,8 +15,32 @@
   padding: 0 30px 0 19px;
 }
 
-.search__form {
+.search__input-container {
   display: flex;
+  flex-direction: row;
+  width: 80%;
+  padding-right: 30px;
+  margin-right: 29px;
+  justify-content: space-between;
+  border-right: solid 1px #E8E8E8;
+}
+
+.search__input {
+  background: #F9F9F9;
+  background-image: url("../../images/icon-min.svg");
+  background-repeat: no-repeat;
+  border: none;
+  color: #A0A0A0;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  width: 85%;
+  padding-left: 44px;
+}
+
+.search__input:focus {
+  outline: none;
 }
 
 .search__submit {

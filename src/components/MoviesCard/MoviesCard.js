@@ -8,9 +8,7 @@ export default function MoviesCard({movie, btnType, onBtnClick}) {
 
   return (
     <>
-      <div
-        className='movie-card'
-      >
+      <div className='movie-card'>
         <div className='movie-card__info'>
           <div>
             <h3 className='movie-card__title'>{movie.nameRU}</h3>
