@@ -60,8 +60,8 @@ function App() {
       />
       <Routes>
         <Route path='/' element={<Main/>}/>
-        <Route path='/movies' element={<Movies movies={movies} onSave={onSave}/>}/>
-        <Route path='/saved-movies' element={<SavedMovies movies={movies} onDelete={onDelete}/>}/>
+        <Route path='/movies' element={<Movies movies={movies.slice(0, 12)} onSave={onSave}/>}/>
+        <Route path='/saved-movies' element={<SavedMovies movies={movies.slice(0, 3)} onDelete={onDelete}/>}/>
         <Route path='/profile' element={<Profile handleSignOut={handleSignOut}/>}/>
         <Route path='/signin' element={<SignIn handleSignIn={handleSignIn}/>}/>
         <Route path='/signup' element={<SignUp handleSignUp={handleSignUp}/>}/>
