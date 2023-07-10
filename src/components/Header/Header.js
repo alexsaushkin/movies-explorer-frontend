@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
-import {NavLink, Link} from 'react-router-dom';
+import {NavLink, Link, useLocation} from 'react-router-dom';
+import Logo from '../Logo/Logo';
 import './Header.css';
-import logo from '../../images/logo-min.svg';
 
 export default function Header({signedIn}) {
 
   const [isMobileMenuOpened, setIsMobileMenuOpened] = useState(false);
+  const {pathname} = useLocation();
+  const isVisible = ['/movies', '/saved-movies', '/profile', '/'].includes(pathname);
 
   function toggleMobileMenu() {
     setIsMobileMenuOpened(!isMobileMenuOpened);
   }
 
   return (
-    <header className='header'>
-      <Link to='/'>
-        <img className='header__logo' src={logo} alt='Лого'/>
-      </Link>
+    <header className={`header ${isVisible ? '' : 'header_hidden'}`}>
+      <Logo/>
       {signedIn ? (
         <>
           <nav className='header__navigation'>

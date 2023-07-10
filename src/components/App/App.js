@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {Routes, Route, useNavigate, Navigate} from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Main from "../Main/Main";
@@ -20,16 +20,16 @@ function App() {
   const [currentUser, setCurrentUser] = useState({name: 'Алексей', email: 'thirdyou@yandex.ru'});
 
   function handleSignUp() {
-    navigate("/sign-in", { replace: true });
+    navigate("/sign-in", {replace: true});
   }
 
   function handleSignIn() {
     setSignedIn(true);
-    navigate("/movies", { replace: true });
+    navigate("/movies", {replace: true});
   }
 
   function handleSignOut() {
-    navigate("/", { replace: true });
+    navigate("/", {replace: true});
     setSignedIn(false);
   }
 
@@ -59,39 +59,41 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
-        <Header signedIn={signedIn} />
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route
-            path="/movies"
-            element={<Movies movies={movies.slice(0, 12)} onSave={onSave} />}
-          />
-          <Route
-            path="/saved-movies"
-            element={
-              <SavedMovies movies={movies.slice(0, 3)} onDelete={onDelete} />
-            }
-          />
-          <Route
-            path="/profile"
-            element={<Profile handleSignOut={handleSignOut} />}
-          />
-          <Route
-            path="/signin"
-            element={<SignIn handleSignIn={handleSignIn} />}
-          />
-          <Route
-            path="/signup"
-            element={<SignUp handleSignUp={handleSignUp} />}
-          />
-          <Route path="/*" element={<NotFound />} />
+        <div>
+          <Header signedIn={signedIn}/>
+          <Routes>
+            <Route path="/" element={<Main/>}/>
+            <Route
+              path="/movies"
+              element={<Movies movies={movies.slice(0, 12)} onSave={onSave}/>}
+            />
+            <Route
+              path="/saved-movies"
+              element={
+                <SavedMovies movies={movies.slice(0, 3)} onDelete={onDelete}/>
+              }
+            />
+            <Route
+              path="/profile"
+              element={<Profile handleSignOut={handleSignOut}/>}
+            />
+            <Route
+              path="/signin"
+              element={<SignIn handleSignIn={handleSignIn}/>}
+            />
+            <Route
+              path="/signup"
+              element={<SignUp handleSignUp={handleSignUp}/>}
+            />
+            <Route path="/*" element={<NotFound/>}/>
 
-          <Route
-            path="/"
-            element={signedIn ? <Navigate to="/" /> : <Navigate to="/signin" />}
-          />
-        </Routes>
-        <Footer />
+            <Route
+              path="/"
+              element={signedIn ? <Navigate to="/"/> : <Navigate to="/signin"/>}
+            />
+          </Routes>
+        </div>
+        <Footer/>
       </div>
     </CurrentUserContext.Provider>
   );

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import CurrentUserContext from '../../contexts/CurrentUserContext'
 import './Profile.css';
 
-export default function Profile({onUpdateUser}) {
+export default function Profile({handleSignOut}) {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
@@ -23,10 +23,11 @@ export default function Profile({onUpdateUser}) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    onUpdateUser({
-      name,
-      email,
-    })
+    // onUpdateUser({
+    //   name,
+    //   email,
+    // })
+    setIsEdit(!isEdit);
   }
 
   useEffect(() => {
@@ -53,7 +54,7 @@ export default function Profile({onUpdateUser}) {
             value={name}
             onChange={handleNameChange}
             placeholder="Имя"
-            disabled={isEdit ? false : true}
+            disabled={!isEdit}
           />
         </div>
         <div className='profile__input-container'>
@@ -67,12 +68,23 @@ export default function Profile({onUpdateUser}) {
             value={email}
             onChange={handleEmailChange}
             placeholder="Email"
-            disabled={isEdit ? false : true}
+            disabled={!isEdit}
           />
         </div>
-        <button className={`profile__btn ${isEdit ? 'profile__btn__hidden' : ''}`} type='button' onClick={handleIsEditClick}>Редактировать</button>
+        <button type='submit' className={`profile__submit-btn ${isEdit ? '' : 'profile__submit-btn_hidden'}`}>
+          Сохранить
+        </button>
       </form>
-      <button className={`profile__btn profile__btn_color_pink ${isEdit ? 'profile__btn__hidden' : ''}`}>Выйти из аккаунта</button>
+      <button
+        className={`profile__btn ${isEdit ? 'profile__btn_hidden' : ''}`}
+        type='button'
+        onClick={handleIsEditClick}
+      >Редактировать</button>
+      <button
+        className={`profile__btn profile__btn_color_pink ${isEdit ? 'profile__btn_hidden' : ''}`}
+        type='button'
+        onClick={handleSignOut}
+      >Выйти из аккаунта</button>
     </main>
   )
 }

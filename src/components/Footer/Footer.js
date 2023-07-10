@@ -1,9 +1,13 @@
 import React from 'react';
 import './Footer.css';
+import {useLocation} from "react-router-dom";
 
 export default function Footer() {
+  const {pathname} = useLocation();
+  const isVisible = ['/movies', '/saved-movies', '/'].includes(pathname);
+
   return (
-    <footer className='footer'>
+    <footer className={`footer ${isVisible ? '' : 'footer_hidden'}`}>
       <h4 className='footer__subtitle'>
         Учебный проект Яндекс.Практикум х BeatFilm.
       </h4>
