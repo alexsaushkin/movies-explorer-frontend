@@ -18,20 +18,39 @@ export default function Header({signedIn}) {
       <Logo/>
       {signedIn ? (
         <>
-          <nav className='header__navigation'>
-            <NavLink
-              to='/movies'
-              className={({isActive}) => `header__navigation-link ${isActive ? 'header__link_active' : ''}`}
-            >Фильмы</NavLink>
-            <NavLink
-              to='/saved-movies'
-              className={({isActive}) => `header__navigation-link ${isActive ? 'header__link_active' : ''}`}
-            >Сохранённые фильмы</NavLink>
-          </nav>
-          <Link to='/profile' className='header__profile-link'>Аккаунт</Link>
+          <div className='header__content'>
+            <nav className='header__navigation'>
+              <NavLink
+                to='/movies'
+                className={({isActive}) => `header__navigation-link ${isActive ? 'header__navigation-link_active' : ''}`}
+              >Фильмы</NavLink>
+              <NavLink
+                to='/saved-movies'
+                className={({isActive}) => `header__navigation-link ${isActive ? 'header__navigation-link_active' : ''}`}
+              >Сохранённые фильмы</NavLink>
+            </nav>
+            <Link to='/profile' className='header__profile-link'>Аккаунт</Link>
+          </div>
           <div className='menu__burger'>
             <div className='menu__toggle-container' onClick={toggleMobileMenu}>
               <span className={`menu__toggle ${isMobileMenuOpened ? 'menu__toggle_clicked' : ''}`}></span>
+            </div>
+            <div className={`menu__content ${isMobileMenuOpened ? 'menu__content_opened' : ''}`}>
+              <nav className='menu__navigation'>
+                <NavLink
+                  to='/'
+                  className={({isActive}) => `menu__navigation-link ${isActive ? 'menu__navigation-link_active' : ''}`}
+                >Главная</NavLink>
+                <NavLink
+                  to='/movies'
+                  className={({isActive}) => `menu__navigation-link ${isActive ? 'menu__navigation-link_active' : ''}`}
+                >Фильмы</NavLink>
+                <NavLink
+                  to='/saved-movies'
+                  className={({isActive}) => `menu__navigation-link ${isActive ? 'menu__navigation-link_active' : ''}`}
+                >Сохранённые фильмы</NavLink>
+              </nav>
+              <Link to='/profile' className='menu__profile-link'>Аккаунт</Link>
             </div>
           </div>
         </>
