@@ -58,6 +58,11 @@
   outline: none;
 }
 
+.profile__input:disabled {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
 .profile__btn {
   padding: 0;
   text-align: center;
@@ -77,4 +82,8 @@
 
 .profile__btn_color_pink {
   color: #FF004D;
+}
+
+.profile__btn__hidden {
+  display: none;
 }
