@@ -3,6 +3,12 @@
   padding: 100px 70px;
 }
 
+@media screen and (max-width: 768px) {
+  .techs {
+    padding: 90px 50px;
+  }
+}
+
 .techs__title {
   text-align: center;
   font-size: 50px;
@@ -11,6 +17,13 @@
   line-height: 58px;
   letter-spacing: -2px;
   margin: 90px auto 26px;
+}
+
+@media screen and (max-width: 768px) {
+  .techs__title {
+    margin-top: 80px;
+    margin-bottom: 22px;
+  }
 }
 
 .techs__description {
@@ -22,6 +35,15 @@
   line-height: 20px;
   letter-spacing: -0.56px;
   margin: 0 auto 100px;
+}
+
+@media screen and (max-width: 768px) {
+  .techs__description {
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.48px;
+    margin-bottom: 83px;
+  }
 }
 
 .techs__skills {
@@ -47,4 +69,12 @@
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.56px;
+}
+
+@media screen and (max-width: 768px) {
+  .techs__skill {
+    min-width: 84px;
+    font-size: 12px;
+    letter-spacing: -0.48px;
+  }
 }

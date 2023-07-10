@@ -2,6 +2,12 @@
   padding: 110px 70px;
 }
 
+@media screen and (max-width: 768px) {
+  .about-project {
+    padding: 90px 50px;
+  }
+}
+
 .about-project__block {
   padding: 70px 0 0;
   display: flex;
@@ -20,6 +26,12 @@
   margin: 0 0 26px;
 }
 
+@media screen and (max-width: 768px) {
+  .about-project__subtitle {
+    margin-bottom: 22px;
+  }
+}
+
 .about-project__description {
   font-size: 14px;
   font-style: normal;
@@ -28,12 +40,24 @@
   margin: 0;
 }
 
+@media screen and (max-width: 768px) {
+  .about-project__description {
+    font-size: 12px;
+  }
+}
+
 .about-project__timeline {
   display: flex;
   flex-direction: row;
   list-style: none;
   margin: 110px 0 0;
   padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .about-project__timeline {
+    margin-top: 93px;
+  }
 }
 
 .about-project__timeline-item {
@@ -70,4 +94,10 @@
   line-height: 17px;
   padding: 14px 0;
   margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .about-project__timeline-text {
+    font-weight: 400;
+  }
 }
