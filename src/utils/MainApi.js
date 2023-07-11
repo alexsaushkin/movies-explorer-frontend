@@ -105,8 +105,7 @@ class MainApi {
 
 const mainApi = new MainApi(
   {
-    /* TODO: поменять адрес! */
-    baseUrl: 'https://api.diplom.ld-webdev.nomoredomains.rocks',
+    baseUrl: 'https://api.movies-thirdyou.nomoredomains.rocks',
     headers: {
       'Content-Type': 'application/json'
     }
