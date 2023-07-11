@@ -35,22 +35,24 @@ export default function Header({signedIn}) {
             <div className='menu__toggle-container' onClick={toggleMobileMenu}>
               <span className={`menu__toggle ${isMobileMenuOpened ? 'menu__toggle_clicked' : ''}`}></span>
             </div>
-            <div className={`menu__content ${isMobileMenuOpened ? 'menu__content_opened' : ''}`}>
-              <nav className='menu__navigation'>
-                <NavLink
-                  to='/'
-                  className={({isActive}) => `menu__navigation-link ${isActive ? 'menu__navigation-link_active' : ''}`}
-                >Главная</NavLink>
-                <NavLink
-                  to='/movies'
-                  className={({isActive}) => `menu__navigation-link ${isActive ? 'menu__navigation-link_active' : ''}`}
-                >Фильмы</NavLink>
-                <NavLink
-                  to='/saved-movies'
-                  className={({isActive}) => `menu__navigation-link ${isActive ? 'menu__navigation-link_active' : ''}`}
-                >Сохранённые фильмы</NavLink>
-              </nav>
-              <Link to='/profile' className='menu__profile-link'>Аккаунт</Link>
+            <div className={`menu__mobile ${isMobileMenuOpened ? 'menu__mobile_opened' : ''}`}>
+              <div className='menu__content'>
+                <nav className='menu__navigation'>
+                  <NavLink
+                    to='/'
+                    className={({isActive}) => `menu__navigation-link ${isActive ? 'menu__navigation-link_active' : ''}`}
+                  >Главная</NavLink>
+                  <NavLink
+                    to='/movies'
+                    className={({isActive}) => `menu__navigation-link ${isActive ? 'menu__navigation-link_active' : ''}`}
+                  >Фильмы</NavLink>
+                  <NavLink
+                    to='/saved-movies'
+                    className={({isActive}) => `menu__navigation-link ${isActive ? 'menu__navigation-link_active' : ''}`}
+                  >Сохранённые фильмы</NavLink>
+                </nav>
+                <Link to='/profile' className='menu__profile-link'>Аккаунт</Link>
+              </div>
             </div>
           </div>
         </>
