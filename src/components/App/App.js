@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import {Routes, Route, useNavigate, Navigate} from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -9,29 +9,96 @@ import Profile from "../Profile/Profile";
 import SignIn from "../SignIn/SignIn";
 import SignUp from "../SignUp/SignUp";
 import NotFound from "../NotFound/NotFound";
+import mainApi from "../../utils/MainApi";
 import moviesApi from "../../utils/MoviesApi";
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import "./App.css";
 
 function App() {
   const navigate = useNavigate();
+
   const [signedIn, setSignedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({name: '', email: ''});
+
   const [movies, setMovies] = useState([]);
-  const [currentUser, setCurrentUser] = useState({name: 'Алексей', email: 'thirdyou@yandex.ru'});
+  const [savedMovies, setSavedMovies] = useState([]);
 
-  function handleSignUp() {
-    navigate("/sign-in", {replace: true});
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  // регистрация пользователя
+  async function handleSignUp({name, email, password}) {
+    setIsLoading(true);
+    try {
+      const userInfo = await mainApi.signup({name, email, password});
+      if (userInfo) {
+        navigate("/sign-in", {replace: true});
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
-  function handleSignIn() {
-    setSignedIn(true);
-    navigate("/movies", {replace: true});
+  // вход пользователя
+  async function handleSignIn({email, password}) {
+    setIsLoading(true);
+    try {
+      const userInfo = mainApi.signin({email, password})
+      if (userInfo) {
+        setSignedIn(true);
+        navigate("/movies", {replace: true});
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
-  function handleSignOut() {
-    navigate("/", {replace: true});
-    setSignedIn(false);
+  // выход пользователя
+  async function handleSignOut() {
+    try {
+      const userInfo = mainApi.signout()
+      if (userInfo) {
+        setSignedIn(false);
+        setCurrentUser({});
+        setSavedMovies([]);
+        localStorage.clear();
+        navigate("/", {replace: true});
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
+
+  // обновление данных пользователя
+  async function handleUpdateUser({name, email}) {
+    setIsLoading(true);
+    try {
+      const userInfo = await mainApi.updateUser({name, email});
+      if (userInfo) {
+        setCurrentUser(userInfo)
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const checkSignedIn = useCallback(async () => {
+    try {
+      const userInfo = await mainApi.getUser();
+      if (userInfo) {
+        setSignedIn(true);
+        setCurrentUser(userInfo);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [])
 
   function onSave(card) {
     console.log(`${card} card saved`);
@@ -53,7 +120,13 @@ function App() {
   }
 
   useEffect(() => {
-    getData();
+    checkSignedIn();
+  }, [signedIn, checkSignedIn]);
+
+  useEffect(() => {
+    if (signedIn) {
+      getData();
+    }
   }, [signedIn]);
 
   return (

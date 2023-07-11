@@ -3,23 +3,24 @@ class MoviesApi{
     this._baseUrl = options.baseUrl;
   }
 
-  _request(url, method = 'GET', params = {}) {
+  _request(url, method = 'GET') {
     const options = {
       method,
     };
 
     return fetch(`${this._baseUrl}/${url}`, options)
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
+      .then(res => {
+        const result = res.json();
+        if (res.ok) {
+          return result;
+        }
 
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+        return result.then((error) => Promise.reject(`Ошибка: ${error.message}`));
+      });
   }
 
-  _get(url, method = 'GET', params = {}, ) {
-    return this._request(url, method, params)
+  _get(url, method = 'GET') {
+    return this._request(url, method)
   }
 
   getMovies() {
