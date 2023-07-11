@@ -2,7 +2,7 @@
   padding: 110px 70px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 984px) {
   .about-project {
     padding: 90px 50px;
   }
@@ -26,7 +26,7 @@
   margin: 0 0 26px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 984px) {
   .about-project__subtitle {
     margin-bottom: 22px;
   }
@@ -40,7 +40,7 @@
   margin: 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 984px) {
   .about-project__description {
     font-size: 12px;
   }
@@ -54,7 +54,7 @@
   padding: 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 984px) {
   .about-project__timeline {
     margin-top: 93px;
   }
@@ -96,7 +96,7 @@
   margin: 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 984px) {
   .about-project__timeline-text {
     font-weight: 400;
   }

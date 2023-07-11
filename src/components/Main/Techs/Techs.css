@@ -3,7 +3,7 @@
   padding: 100px 70px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 984px) {
   .techs {
     padding: 90px 50px;
   }
@@ -19,7 +19,7 @@
   margin: 90px auto 26px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 984px) {
   .techs__title {
     margin-top: 80px;
     margin-bottom: 22px;
@@ -37,7 +37,7 @@
   margin: 0 auto 100px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 984px) {
   .techs__description {
     font-size: 12px;
     line-height: 18px;
@@ -71,7 +71,7 @@
   letter-spacing: -0.56px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 984px) {
   .techs__skill {
     min-width: 84px;
     font-size: 12px;

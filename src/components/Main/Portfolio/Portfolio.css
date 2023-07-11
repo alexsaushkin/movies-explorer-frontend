@@ -13,6 +13,10 @@
   margin: 0;
 }
 
+.portfolio__project:not(:first-of-type) {
+  margin-top: 20px;
+}
+
 .portfolio__project:not(:last-of-type) {
   padding-bottom: 19px;
   border-bottom: 1px solid #E8E8E8;
@@ -30,6 +34,13 @@
   color: #000;
   transition: opacity 0.3s ease-in;
   cursor: pointer;
+}
+
+@media screen and (max-width: 984px) {
+  .portfolio__project-link {
+    font-size: 28px;
+    letter-spacing: -1.12px;
+  }
 }
 
 .portfolio__project-link:hover {

@@ -1,6 +1,15 @@
 .footer {
   display: flex;
   flex-direction: column;
+  padding-left: 70px;
+  padding-right: 70px;
+}
+
+@media screen and (max-width: 984px) {
+  .footer {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 }
 
 .footer__subtitle {
