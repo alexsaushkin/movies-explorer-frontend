@@ -21,8 +21,11 @@ export default function Header({signedIn}) {
     }
 
     if (isMobileMenuOpened) {
+      document.body.style.overflow = 'hidden';
       window.addEventListener('resize', handleAutoCloseMenu);
       return () => window.removeEventListener('resize', handleAutoCloseMenu);
+    } else {
+      document.body.style.overflow = 'unset';
     }
   }, [isMobileMenuOpened]);
 
