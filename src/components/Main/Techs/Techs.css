@@ -9,6 +9,13 @@
   }
 }
 
+@media screen and (max-width: 700px) {
+  .techs {
+    background-color: #FFFFFF;
+    padding: 70px 18px;
+  }
+}
+
 .techs__title {
   text-align: center;
   font-size: 50px;
@@ -23,6 +30,16 @@
   .techs__title {
     margin-top: 80px;
     margin-bottom: 22px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .techs__title {
+    margin-top: 60px;
+    margin-bottom: 24px;
+    font-size: 30px;
+    line-height: normal;
+    letter-spacing: -1.2px;
   }
 }
 
@@ -46,6 +63,15 @@
   }
 }
 
+@media screen and (max-width: 700px) {
+  .techs__description {
+    margin-bottom: 50px;
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: -0.44px;
+  }
+}
+
 .techs__skills {
   list-style: none;
   padding: 0;
@@ -55,6 +81,14 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+}
+
+@media screen and (max-width: 700px) {
+  .techs__skills {
+    display: grid;
+    grid-template-columns: repeat(2, 90px);
+    gap: 10px;
+  }
 }
 
 .techs__skill {
