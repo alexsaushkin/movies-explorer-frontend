@@ -10,6 +10,13 @@
   line-height: 18px;
 }
 
+@media screen and (max-width: 700px) {
+  .filter {
+    gap: 13px;
+    font-size: 11px;
+  }
+}
+
 .filter__input {
   position: absolute;
   opacity: 0;

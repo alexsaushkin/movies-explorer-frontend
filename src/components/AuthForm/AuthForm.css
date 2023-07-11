@@ -13,6 +13,14 @@
   }
 }
 
+@media screen and (max-width: 700px) {
+  .auth {
+    padding-top: 56px;
+    align-items: center;
+    max-width: 260px;
+  }
+}
+
 .auth__title {
   margin: 0;
   font-size: 24px;
@@ -23,9 +31,17 @@
   margin-bottom: 40px;
 }
 
+@media screen and (max-width: 700px) {
+  .auth__title {
+    padding-top: 50px;
+    margin-bottom: 80px;
+  }
+}
+
 .auth__form {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .auth__input-container {
@@ -53,7 +69,7 @@
   color: #000;
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: normal;
   border-bottom: 1px solid #E8E8E8;
 }

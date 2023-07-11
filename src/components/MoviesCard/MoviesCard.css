@@ -8,6 +8,13 @@
   justify-content: space-between;
 }
 
+@media screen and (max-width: 700px) {
+  .movie-card {
+    box-shadow: none;
+    height: 236px;
+  }
+}
+
 .movie-card__info {
   padding: 14px;
   display: flex;
@@ -26,6 +33,12 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 280px;
+}
+
+@media screen and (max-width: 700px) {
+  .movie-card__title {
+    max-width: 210px;
+  }
 }
 
 .movie-card__time {
@@ -72,4 +85,10 @@
   max-height: 100%;
   object-fit: cover;
   object-position: center;
+}
+
+@media screen and (max-width: 700px) {
+  .movie-card__preview {
+    height: 168px;
+  }
 }

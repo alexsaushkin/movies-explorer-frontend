@@ -13,6 +13,13 @@
   }
 }
 
+@media screen and (max-width: 700px) {
+  .profile {
+    padding-top: 70px;
+    max-width: 260px;
+  }
+}
+
 .profile__title {
   text-align: center;
   font-size: 24px;
@@ -31,6 +38,12 @@
   flex-direction: column;
   align-items: center;
   margin-top: 123px;
+}
+
+@media screen and (max-width: 700px) {
+  .profile__form {
+    margin-top: 80px;
+  }
 }
 
 .profile__input-container {

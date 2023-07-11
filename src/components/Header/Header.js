@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavLink, Link, useLocation} from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import './Header.css';
@@ -12,6 +12,19 @@ export default function Header({signedIn}) {
   function toggleMobileMenu() {
     setIsMobileMenuOpened(!isMobileMenuOpened);
   }
+
+  useEffect(() => {
+    function handleAutoCloseMenu() {
+      window.onresize = () => {
+        setIsMobileMenuOpened(false);
+      };
+    }
+
+    if (isMobileMenuOpened) {
+      window.addEventListener('resize', handleAutoCloseMenu);
+      return () => window.removeEventListener('resize', handleAutoCloseMenu);
+    }
+  }, [isMobileMenuOpened]);
 
   return (
     <header className={`header ${isVisible ? '' : 'header_hidden'}`}>
