@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState} from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 
 
@@ -34,9 +34,9 @@ export default function SignIp({handleSignIn}) {
             className='auth__input'
             value={email}
             onChange={handleEmailChange}
-            placeholder="Email"
+            placeholder='Email'
           />
-          <span className="auth__error email-input-error"></span>
+          <span className='auth__error email-input-error'></span>
         </div>
         <div className='auth__input-container'>
           <label htmlFor='email-input' className='auth__label'>Пароль</label>
@@ -48,9 +48,9 @@ export default function SignIp({handleSignIn}) {
             className='auth__input'
             value={password}
             onChange={handlePasswordChange}
-            placeholder="Пароль"
+            placeholder='Пароль'
           />
-          <span className="auth__error password-input-error"></span>
+          <span className='auth__error password-input-error'></span>
         </div>
       </>
     </AuthForm>

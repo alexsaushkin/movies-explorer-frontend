@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext'
 import './Profile.css';
 
@@ -49,11 +49,11 @@ export default function Profile({handleSignOut}) {
             id='name-input'
             required
             className='profile__input'
-            minLength="2"
-            maxLength="30"
+            minLength='2'
+            maxLength='30'
             value={name}
             onChange={handleNameChange}
-            placeholder="Имя"
+            placeholder='Имя'
             disabled={!isEdit}
           />
         </div>
@@ -67,7 +67,7 @@ export default function Profile({handleSignOut}) {
             className='profile__input'
             value={email}
             onChange={handleEmailChange}
-            placeholder="Email"
+            placeholder='Email'
             disabled={!isEdit}
           />
         </div>

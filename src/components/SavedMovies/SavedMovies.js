@@ -1,7 +1,7 @@
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-export default function Movies({ movies, onDelete }) {
+export default function SavedMovies({ movies, onDelete }) {
   return (
     <main className='movies'>
       <SearchForm />

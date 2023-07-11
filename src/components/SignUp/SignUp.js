@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState} from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 
 
@@ -37,13 +37,13 @@ export default function SignUp({handleSignUp}) {
             id='name-input'
             required
             className='auth__input'
-            minLength="2"
-            maxLength="30"
+            minLength='2'
+            maxLength='30'
             value={name}
             onChange={handleNameChange}
-            placeholder="Имя"
+            placeholder='Имя'
           />
-          <span className="auth__error name-input-error"></span>
+          <span className='auth__error name-input-error'></span>
         </div>
         <div className='auth__input-container'>
           <label htmlFor='email-input' className='auth__label'>E-mail</label>
@@ -55,9 +55,9 @@ export default function SignUp({handleSignUp}) {
             className='auth__input'
             value={email}
             onChange={handleEmailChange}
-            placeholder="Email"
+            placeholder='Email'
           />
-          <span className="auth__error email-input-error"></span>
+          <span className='auth__error email-input-error'></span>
         </div>
         <div className='auth__input-container'>
           <label htmlFor='email-input' className='auth__label'>Пароль</label>
@@ -69,9 +69,9 @@ export default function SignUp({handleSignUp}) {
             className='auth__input'
             value={password}
             onChange={handlePasswordChange}
-            placeholder="Пароль"
+            placeholder='Пароль'
           />
-          <span className="auth__error password-input-error"></span>
+          <span className='auth__error password-input-error'></span>
         </div>
       </>
     </AuthForm>
