@@ -13,7 +13,7 @@ export default function Footer() {
       </h4>
       <div className='footer__content'>
         <p className='footer__copyright'>&copy;&nbsp;{(new Date().getFullYear())}</p>
-        <ul className='footer_links'>
+        <ul className='footer__links'>
           <li>
             <a
               className='footer__link'

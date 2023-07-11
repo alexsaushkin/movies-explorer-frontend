@@ -87,6 +87,7 @@
 
 .profile__input:focus {
   outline: none;
+  background-color: #E8E8E8;
 }
 
 .profile__input:disabled {
