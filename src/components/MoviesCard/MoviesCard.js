@@ -1,6 +1,6 @@
 import './MoviesCard.css'
 
-export default function MoviesCard({movie, btnType, onBtnClick, isSaved}) {
+export default function MoviesCard({movie, isSaved, btnType, onBtnClick}) {
 
   function getTime(minutes) {
     return `${Math.round(minutes / 60)}ч ${(minutes % 60)}м`
@@ -18,7 +18,8 @@ export default function MoviesCard({movie, btnType, onBtnClick, isSaved}) {
           <p className='movie-card__time'>{getTime(movie.duration)}</p>
         </div>
         <button
-          className={`movie-card__btn movie-card__btn_type_${btnType}`}
+          className={`movie-card__btn movie-card__btn_type_${btnType}
+          ${isSaved && btnType === 'save' ? 'movie-card__btn_active' : ''}`}
           type='button'
           onClick={onBtnClick}
         >

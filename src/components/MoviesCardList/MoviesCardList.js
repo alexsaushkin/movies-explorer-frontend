@@ -36,7 +36,7 @@ export default function MoviesCardList({
       setVisibleMovies(movies);
     } else {
       // обрезать количество в зависимости от разрешения
-      const resMovies = movies.slice(0, 3);
+      const resMovies = movies.slice(0, 12);
       setVisibleMovies(resMovies);
     }
   }, [movies, isSaved]);
@@ -56,7 +56,7 @@ export default function MoviesCardList({
           movie={movie}
           isSaved={handleIsSavedMovie(savedMovies, movie)}
           btnType={isSaved ? 'delete' : 'save'}
-          onBtnClick={onDelete}
+          onBtnClick={isSaved ? onDelete : onSave}
         />
       </li>
     );
