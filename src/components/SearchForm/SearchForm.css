@@ -126,3 +126,12 @@
 .search__submit:hover {
   opacity: 0.8;
 }
+
+.search__error {
+  padding-left: 10px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: #FF3055;
+}

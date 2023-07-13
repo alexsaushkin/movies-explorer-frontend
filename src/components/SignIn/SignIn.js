@@ -1,27 +1,25 @@
 import React, {useState} from 'react';
 import AuthForm from '../AuthForm/AuthForm';
+import useFormWithValidation from "../../utils/useFormWithValidation";
 
 
-export default function SignIp({handleSignIn}) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function SignIp({handleSignIn, signedIn, isLoading}) {
+  const {values, handleChange, errors, isValid} = useFormWithValidation();
 
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
-
-  function handlePasswordChange(e) {
-    setPassword(e.target.value);
+  function onSignIn(e) {
+    e.preventDefault();
+    handleSignIn(values);
   }
 
   return (
     <AuthForm
       title='Рады видеть!'
-      onSubmit={handleSignIn}
+      onSubmit={onSignIn}
       btnText='Войти'
       questionText='Ещё не зарегистрированы?'
       linkTo='/signup'
       linkText='Регистрация'
+      isValid={isValid}
     >
       <>
         <div className='auth__input-container'>
@@ -32,11 +30,11 @@ export default function SignIp({handleSignIn}) {
             id='email-input'
             required
             className='auth__input'
-            value={email}
-            onChange={handleEmailChange}
+            value={values.email || ''}
+            onChange={handleChange}
             placeholder='Email'
           />
-          <span className='auth__error email-input-error'></span>
+          <span className='auth__error email-input-error'>{errors.email}</span>
         </div>
         <div className='auth__input-container'>
           <label htmlFor='email-input' className='auth__label'>Пароль</label>
@@ -46,11 +44,11 @@ export default function SignIp({handleSignIn}) {
             id='password-input'
             required
             className='auth__input'
-            value={password}
-            onChange={handlePasswordChange}
+            value={values.password || ''}
+            onChange={handleChange}
             placeholder='Пароль'
           />
-          <span className='auth__error password-input-error'></span>
+          <span className='auth__error password-input-error'>{errors.password}</span>
         </div>
       </>
     </AuthForm>

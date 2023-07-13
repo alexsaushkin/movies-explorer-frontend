@@ -32,7 +32,11 @@ function App() {
     try {
       const userInfo = await mainApi.signup({name, email, password});
       if (userInfo) {
-        navigate('/sign-in', {replace: true});
+        const userSignInInfo = mainApi.signin({email, password})
+        if (userSignInInfo) {
+          setSignedIn(true);
+          navigate('/movies', {replace: true});
+        }
       }
     } catch (error) {
       console.log(error);
@@ -204,7 +208,6 @@ function App() {
               path='/profile'
               element={<ProtectedRoute
                 element={Profile}
-                signedIn={signedIn}
                 onUpdate={handleUpdateUser}
                 onSignOut={handleSignOut}
                 isLoading={isLoading}
@@ -212,11 +215,19 @@ function App() {
             />
             <Route
               path='/signin'
-              element={<SignIn handleSignIn={handleSignIn}/>}
+              element={<SignIn
+                handleSignIn={handleSignIn}
+                signedIn={signedIn}
+                isLoading={isLoading}
+              />}
             />
             <Route
               path='/signup'
-              element={<SignUp handleSignUp={handleSignUp}/>}
+              element={<SignUp
+                handleSignUp={handleSignUp}
+                signedIn={signedIn}
+                isLoading={isLoading}
+              />}
             />
             <Route path='/*' element={<NotFound/>}/>
 

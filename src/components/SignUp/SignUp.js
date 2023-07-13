@@ -1,32 +1,26 @@
 import React, {useState} from 'react';
 import AuthForm from '../AuthForm/AuthForm';
+import useFormWithValidation from "../../utils/useFormWithValidation";
+import {NAME_REGEX} from "../../utils/constants";
 
 
-export default function SignUp({handleSignUp}) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function SignUp({handleSignUp, signedIn, isLoading}) {
+  const {values, handleChange, errors, isValid} = useFormWithValidation();
 
-  function handleNameChange(e) {
-    setName(e.target.value);
-  }
-
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
-
-  function handlePasswordChange(e) {
-    setPassword(e.target.value);
+  function onSignUp(e) {
+    e.preventDefault();
+    handleSignUp(values);
   }
 
   return (
     <AuthForm
       title='Добро пожаловать!'
-      onSubmit={handleSignUp}
+      onSubmit={onSignUp}
       btnText='Зарегистрироваться'
       questionText='Уже зарегистрированы?'
       linkTo='/signin'
       linkText='Войти'
+      isValid={isValid}
     >
       <>
         <div className='auth__input-container'>
@@ -39,11 +33,12 @@ export default function SignUp({handleSignUp}) {
             className='auth__input'
             minLength='2'
             maxLength='30'
-            value={name}
-            onChange={handleNameChange}
+            value={values.name || ''}
+            pattern={NAME_REGEX}
+            onChange={handleChange}
             placeholder='Имя'
           />
-          <span className='auth__error name-input-error'></span>
+          <span className='auth__error name-input-error'>{errors.name}</span>
         </div>
         <div className='auth__input-container'>
           <label htmlFor='email-input' className='auth__label'>E-mail</label>
@@ -53,11 +48,11 @@ export default function SignUp({handleSignUp}) {
             id='email-input'
             required
             className='auth__input'
-            value={email}
-            onChange={handleEmailChange}
+            value={values.email || ''}
+            onChange={handleChange}
             placeholder='Email'
           />
-          <span className='auth__error email-input-error'></span>
+          <span className='auth__error email-input-error'>{errors.email}</span>
         </div>
         <div className='auth__input-container'>
           <label htmlFor='email-input' className='auth__label'>Пароль</label>
@@ -67,11 +62,11 @@ export default function SignUp({handleSignUp}) {
             id='password-input'
             required
             className='auth__input'
-            value={password}
-            onChange={handlePasswordChange}
+            value={values.password || ''}
+            onChange={handleChange}
             placeholder='Пароль'
           />
-          <span className='auth__error password-input-error'></span>
+          <span className='auth__error password-input-error'>{errors.password}</span>
         </div>
       </>
     </AuthForm>

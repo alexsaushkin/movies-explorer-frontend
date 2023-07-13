@@ -111,6 +111,16 @@
   opacity: 0.8;
 }
 
+.auth__submit-btn:disabled {
+  background: #F8F8F8;
+  color: #C2C2C2;
+  cursor: auto;
+}
+
+.auth__submit-btn:disabled:hover {
+  opacity: 1;
+}
+
 .auth__question {
   color: #A0A0A0;
   text-align: center;

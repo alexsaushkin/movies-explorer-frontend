@@ -11,21 +11,20 @@ export default function AuthForm({
   questionText,
   linkTo,
   linkText,
+  isValid,
   children,
 }) {
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    onSubmit();
-  }
 
   return (
     <main className='auth'>
       <Logo/>
       <h1 className='auth__title'>{title}</h1>
-      <form className='auth__form' onSubmit={handleSubmit}>
+      <form
+        className='auth__form'
+        onSubmit={onSubmit}
+      >
         {children}
-        <button type='submit' className='auth__submit-btn'>
+        <button type='submit' className='auth__submit-btn' disabled={!isValid}>
           {btnText}
         </button>
       </form>
