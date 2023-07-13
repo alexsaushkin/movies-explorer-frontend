@@ -6,11 +6,19 @@
   height: 271px;
   overflow: hidden;
   justify-content: space-between;
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in;
+}
+
+.movie-card:hover {
+  box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.2);
 }
 
 @media screen and (max-width: 700px) {
   .movie-card {
-    box-shadow: none;
+    /*box-shadow: none;*/
     height: 236px;
   }
 }

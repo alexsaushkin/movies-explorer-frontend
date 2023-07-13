@@ -18,6 +18,14 @@
   }
 }
 
+.movies-card-list__message {
+  color: #FF3055;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 .movies-card-list__items {
   list-style: none;
   margin: 0;

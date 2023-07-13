@@ -1,57 +1,36 @@
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useState} from "react";
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Preloader from '../Preloader/Preloader';
+import {handleFilterMovieNames, handleFilterMovieDuration} from '../../utils/MoviesUtils';
 
 import './Movies.css';
 
-export default function Movies({savedMovies, onSearch, onSave, onDelete, isLoading}) {
+export default function Movies({savedMovies, onSearch, onSave, onDelete, isLoading, error}) {
   // все фильмы
-  const [movies, setMovies] = useState([]);
+  const [allMovies, setAllMovies] = useState([]);
+  const [foundMovies, setFoundMovies] = useState([]);
+  const [resultMovies, setResultMovies] = useState([]);
   // чекбокс миниатюр
   const [isCheckOn, setIsCheckOn] = useState(false);
   const [notFound, setNotFound] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-
-  // функция фильтрации по времени
-  function handleFilterMovieDuration(movies) {
-    // отбираем только фильмы у которых длительность меньше или равна 40 минутам
-    return movies.filter((movie) => {
-      return movie.duration <= 40;
-    });
-  }
-
-  // функция фильтрации поиска
-  function handleFilterMovieNames(movies, search) {
-    // убираем лишнее из поискового запроса
-    const searchTrimmed = search.toLowerCase().trim();
-    // фильтруем фильмы по запросу, проверяем содержится ли запрос в названии фильма
-    return movies.filter((movie) => {
-      return movie.nameRU.toLowerCase().trim().includes(searchTrimmed) ||
-        movie.nameEN.toLowerCase().trim().includes(searchTrimmed);
-    });
-  }
-
-  // функция поиска в сохранённых
-  function handleIsSavedMovie(savedMovies, movie) {
-    return savedMovies.find((savedMovie) => {
-      return savedMovie.movieId === (movie.id || movie.movieId);
-    });
-  }
-
-  function onFilterChange(val) {
-    setIsCheckOn(val);
-  }
 
   const handleSearchMovies = useCallback(
     (movies, searchText) => {
       const foundMovies = handleFilterMovieNames(movies, searchText);
+      setFoundMovies(foundMovies);
       if (!foundMovies.length) {
         setNotFound(true);
+        setResultMovies(foundMovies);
       } else {
         if (isCheckOn) {
-          setMovies(handleFilterMovieDuration(foundMovies))
+          const shortMovies = handleFilterMovieDuration(foundMovies);
+          if (!shortMovies.length) {
+            setNotFound(true);
+          }
+          setResultMovies(shortMovies);
         } else {
-          setMovies(foundMovies)
+          setResultMovies(foundMovies);
         }
       }
 
@@ -60,11 +39,37 @@ export default function Movies({savedMovies, onSearch, onSave, onDelete, isLoadi
 
   const handleSubmit = useCallback(async (search) => {
       setNotFound(false);
-      const moviesData = await onSearch();
-      if (moviesData) {
-        handleSearchMovies(moviesData, search);
+      if (!allMovies.length) {
+        const moviesData = await onSearch();
+        if (moviesData) {
+          setAllMovies(moviesData);
+          handleSearchMovies(moviesData, search);
+        }
+      } else {
+        handleSearchMovies(allMovies, search)
       }
-    }, [handleSearchMovies, onSearch]
+    }, [allMovies, handleSearchMovies, onSearch]
+  )
+
+  const onFilterChange = useCallback(
+    (isChecked) => {
+      setIsCheckOn(isChecked);
+      setNotFound(false);
+      if (isChecked) {
+        const movies = handleFilterMovieDuration(foundMovies);
+        if (!movies.length) {
+          setNotFound(true);
+        }
+        setResultMovies(movies);
+      } else {
+        if (!foundMovies.length) {
+          setNotFound(true);
+        }
+        setResultMovies(foundMovies);
+      }
+
+
+    }, [foundMovies]
   )
 
   return (
@@ -73,15 +78,17 @@ export default function Movies({savedMovies, onSearch, onSave, onDelete, isLoadi
         onSubmit={handleSubmit}
         onFilterChange={onFilterChange}
       />
-      <MoviesCardList
-        movies={movies}
+      {isLoading && <Preloader/>}
+      {!isLoading && <MoviesCardList
+        movies={resultMovies}
         savedMovies={savedMovies}
         notFound={notFound}
+        error={error}
         isSaved={false}
         onSave={onSave}
         onDelete={onDelete}
-        isLoading={isLoading}
-      />
+      />}
+
     </main>
   )
 }

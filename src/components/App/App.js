@@ -22,7 +22,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({name: '', email: ''});
 
   const [savedMovies, setSavedMovies] = useState([]);
-
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -39,7 +39,7 @@ function App() {
         }
       }
     } catch (error) {
-      console.log(error);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -55,7 +55,7 @@ function App() {
         navigate('/movies', {replace: true});
       }
     } catch (error) {
-      console.log(error);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -73,7 +73,7 @@ function App() {
         navigate('/', {replace: true});
       }
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
   }
 
@@ -86,7 +86,7 @@ function App() {
         setCurrentUser(userInfo)
       }
     } catch (error) {
-      console.log(error);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -100,19 +100,19 @@ function App() {
         setCurrentUser(userInfo);
       }
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
   }, [])
 
   async function getMovies() {
     setIsLoading(true);
     try {
-      const moviesData = moviesApi.getMovies();
+      const moviesData = await moviesApi.getMovies();
       if (moviesData) {
         return moviesData;
       }
     } catch (error) {
-      console.log(error);
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -125,7 +125,7 @@ function App() {
         setSavedMovies(moviesData);
       }
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
   }, [])
 
@@ -148,7 +148,7 @@ function App() {
         setSavedMovies([movieData, ...savedMovies]);
       }
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
   }
 
@@ -160,7 +160,7 @@ function App() {
         setSavedMovies((state) => state.filter((movie._id !== hasMovie._id)))
       }
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
   }
 
@@ -170,9 +170,9 @@ function App() {
 
   useEffect(() => {
     if (signedIn) {
-      getMovies();
+      getSavedMovies();
     }
-  }, [signedIn]);
+  }, [signedIn, getSavedMovies]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -185,23 +185,21 @@ function App() {
               path='/movies'
               element={<ProtectedRoute
                 element={Movies}
-                signedIn={signedIn}
                 savedMovies={savedMovies}
                 onSearch={getMovies}
                 onSave={onSave}
                 onDelete={onDelete}
                 isLoading={isLoading}
+                error={error}
               />}
             />
             <Route
               path='/saved-movies'
               element={<ProtectedRoute
                 element={SavedMovies}
-                signedIn={signedIn}
                 savedMovies={savedMovies}
-                onSearch={getSavedMovies}
                 onDelete={onDelete}
-                isLoading={isLoading}
+                error={error}
               />}
             />
             <Route

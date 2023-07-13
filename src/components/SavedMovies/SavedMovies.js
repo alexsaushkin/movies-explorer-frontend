@@ -1,14 +1,86 @@
+import {useCallback, useState} from "react";
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import {handleFilterMovieNames, handleFilterMovieDuration} from '../../utils/MoviesUtils';
+import Preloader from "../Preloader/Preloader";
 
-export default function SavedMovies({ movies, onDelete }) {
+
+export default function SavedMovies({savedMovies, onDelete, error}) {
+  // все фильмы
+  const [allMovies, setAllMovies] = useState([]);
+  const [foundMovies, setFoundMovies] = useState([]);
+  const [resultMovies, setResultMovies] = useState([]);
+  // чекбокс миниатюр
+  const [isCheckOn, setIsCheckOn] = useState(false);
+  const [notFound, setNotFound] = useState(false);
+
+  const handleSearchMovies = useCallback(
+    (movies, searchText) => {
+      const foundMovies = handleFilterMovieNames(movies, searchText);
+      setFoundMovies(foundMovies);
+      if (!foundMovies.length) {
+        setNotFound(true);
+        setResultMovies(foundMovies);
+      } else {
+        if (isCheckOn) {
+          const shortMovies = handleFilterMovieDuration(foundMovies);
+          if (!shortMovies.length) {
+            setNotFound(true);
+          }
+          setResultMovies(shortMovies);
+        } else {
+          setResultMovies(foundMovies);
+        }
+      }
+
+    }, [isCheckOn]
+  );
+
+  const handleSubmit = useCallback(async (search) => {
+      setNotFound(false);
+      if (!allMovies.length) {
+        if (savedMovies) {
+          setAllMovies(savedMovies);
+          handleSearchMovies(savedMovies, search);
+        }
+      } else {
+        handleSearchMovies(allMovies, search)
+      }
+    }, [allMovies, handleSearchMovies, savedMovies]
+  )
+
+  const onFilterChange = useCallback(
+    (isChecked) => {
+      setIsCheckOn(isChecked);
+      setNotFound(false);
+      if (isChecked) {
+        const movies = handleFilterMovieDuration(foundMovies);
+        if (!movies.length) {
+          setNotFound(true);
+        }
+        setResultMovies(movies);
+      } else {
+        if (!foundMovies.length) {
+          setNotFound(true);
+        }
+        setResultMovies(foundMovies);
+      }
+    }, [foundMovies]
+  )
+
   return (
     <main className='movies'>
-      <SearchForm />
+      <SearchForm
+        onSubmit={handleSubmit}
+        onFilterChange={onFilterChange}
+      />
       <MoviesCardList
-        movies={movies}
+        movies={resultMovies}
+        savedMovies={savedMovies}
+        notFound={notFound}
+        error={error}
         isSaved={true}
-        onBtnClick={onDelete}
+        onDelete={onDelete}
       />
     </main>
   )
