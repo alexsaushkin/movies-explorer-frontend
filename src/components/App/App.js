@@ -32,7 +32,7 @@ function App() {
     try {
       const userInfo = await mainApi.signup({name, email, password});
       if (userInfo) {
-        const userSignInInfo = mainApi.signin({email, password})
+        const userSignInInfo = await mainApi.signin({email, password})
         if (userSignInInfo) {
           setSignedIn(true);
           navigate('/movies', {replace: true});
@@ -49,7 +49,8 @@ function App() {
   async function handleSignIn({email, password}) {
     setIsLoading(true);
     try {
-      const userInfo = mainApi.signin({email, password})
+      const userInfo = await mainApi.signin({email, password})
+      console.log(userInfo);
       if (userInfo) {
         setSignedIn(true);
         navigate('/movies', {replace: true});
@@ -64,7 +65,7 @@ function App() {
   // выход пользователя
   async function handleSignOut() {
     try {
-      const userInfo = mainApi.signout()
+      const userInfo = await mainApi.signout()
       if (userInfo) {
         setSignedIn(false);
         setCurrentUser({});
@@ -153,7 +154,7 @@ function App() {
   }
 
   async function onDelete(movie) {
-    const hasMovie = savedMovies.find((movie) => movie.movieId === movie.id || movie.movieId === movie.movieId);
+    const hasMovie = savedMovies.find((foundMovie) => foundMovie.movieId === movie.id || foundMovie.movieId === movie.movieId);
     try {
       const deletedMovie = await mainApi.deleteMovie(hasMovie._id);
       if (deletedMovie) {
