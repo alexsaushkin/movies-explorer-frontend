@@ -21,7 +21,7 @@ export default function Profile({onUpdate, onSignOut, isLoading}) {
   }
 
   useEffect(() => {
-    resetForm(false, currentUser)
+    resetForm(currentUser, {}, true)
   }, [resetForm, currentUser]);
 
   return (
