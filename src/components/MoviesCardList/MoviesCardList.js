@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import MoviesCard from '../MoviesCard/MoviesCard';
+import Resize from "../../utils/Resize";
 import './MoviesCardList.css';
 
 
@@ -14,6 +15,9 @@ export default function MoviesCardList({
                                        }) {
   const [visibleMovies, setVisibleMovies] = useState([]);
   const [visibleBtn, setVisibleBtn] = useState(false);
+  const [cardSlice, setCardSlice] = useState(12);
+  const [cardRow, setCardRow] = useState(3);
+  const winSize = Resize();
 
   // функция поиска в сохранённых
   function handleIsSavedMovie(savedMovies, movie) {
@@ -24,7 +28,7 @@ export default function MoviesCardList({
 
   function handleClickMore() {
     const begin = visibleMovies.length;
-    const end = begin + 3;
+    const end = begin + cardRow;
     if (movies.length > begin) {
       const moreMovies = movies.slice(begin, end);
       setVisibleMovies([...visibleMovies, ...moreMovies])
@@ -35,24 +39,39 @@ export default function MoviesCardList({
     if (isSaved) {
       setVisibleMovies(movies);
     } else {
-      // обрезать количество в зависимости от разрешения
       if (localStorage.getItem('movies')) {
-        const resMovies = JSON.parse(localStorage.getItem('movies')).slice(0, 12);
+        const resMovies = JSON.parse(localStorage.getItem('movies')).slice(0, cardSlice);
         setVisibleMovies(resMovies);
       } else {
-        const resMovies = movies.slice(0, 12);
+        const resMovies = movies.slice(0, cardSlice);
         setVisibleMovies(resMovies);
       }
     }
-  }, [movies, isSaved]);
+  }, [cardSlice, movies, isSaved]);
 
   useEffect(() => {
+    console.log(visibleMovies.length, movies.length)
     if (visibleMovies.length < movies.length) {
+      console.log('show')
       setVisibleBtn(true);
     } else {
+      console.log('ne show')
       setVisibleBtn(false);
     }
   }, [movies, visibleBtn, visibleMovies])
+
+  useEffect(() => {
+    if (winSize >= 984) {
+      setCardSlice(12);
+      setCardRow(3);
+    } else if (winSize >= 700) {
+      setCardSlice(8);
+      setCardRow(2);
+    } else {
+      setCardSlice(5);
+      setCardRow(1);
+    }
+  }, [winSize]);
 
   const movieObjects = visibleMovies.map((movie) => {
     return (
