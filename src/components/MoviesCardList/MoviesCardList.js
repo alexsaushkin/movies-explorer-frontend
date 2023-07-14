@@ -51,10 +51,11 @@ export default function MoviesCardList({
 
   const movieObjects = visibleMovies.map((movie) => {
     return (
-      <li key={movie.id}>
+      <li key={movie.id || movie._id}>
         <MoviesCard
           movie={movie}
           isSaved={handleIsSavedMovie(savedMovies, movie)}
+          image={!isSaved ? `https://api.nomoreparties.co${movie.image.url}` : `${movie.image}`}
           btnType={isSaved ? 'delete' : 'save'}
           onBtnClick={isSaved ? onDelete : onSave}
         />

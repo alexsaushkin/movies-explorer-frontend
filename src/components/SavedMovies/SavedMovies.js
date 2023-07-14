@@ -1,8 +1,7 @@
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import {handleFilterMovieNames, handleFilterMovieDuration} from '../../utils/MoviesUtils';
-import Preloader from "../Preloader/Preloader";
 
 
 export default function SavedMovies({savedMovies, onDelete, error}) {
@@ -67,6 +66,11 @@ export default function SavedMovies({savedMovies, onDelete, error}) {
       }
     }, [foundMovies]
   )
+
+  useEffect(() => {
+    setFoundMovies(savedMovies);
+    setResultMovies(savedMovies);
+  }, [savedMovies])
 
   return (
     <main className='movies'>

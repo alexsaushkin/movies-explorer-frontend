@@ -137,9 +137,9 @@ function App() {
         duration: movie.duration,
         year: movie.year,
         description: movie.description,
-        image: `https://api.nomoreparties.co/${movie.image}`,
+        image: `https://api.nomoreparties.co${movie.image.url}`,
         trailerLink: movie.trailerLink,
-        thumbnail: `https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`,
+        thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
         movieId: movie.id,
         nameRU: movie.nameRU,
         nameEN: movie.nameEN,
@@ -157,7 +157,7 @@ function App() {
     try {
       const deletedMovie = await mainApi.deleteMovie(hasMovie._id);
       if (deletedMovie) {
-        setSavedMovies((state) => state.filter((movie._id !== hasMovie._id)))
+        setSavedMovies((state) => state.filter((foundMovie) => (foundMovie._id !== hasMovie._id)))
       }
     } catch (error) {
       setError(error);
@@ -191,6 +191,7 @@ function App() {
                 onDelete={onDelete}
                 isLoading={isLoading}
                 error={error}
+                signedIn={signedIn}
               />}
             />
             <Route
@@ -200,6 +201,7 @@ function App() {
                 savedMovies={savedMovies}
                 onDelete={onDelete}
                 error={error}
+                signedIn={signedIn}
               />}
             />
             <Route
@@ -209,6 +211,7 @@ function App() {
                 onUpdate={handleUpdateUser}
                 onSignOut={handleSignOut}
                 isLoading={isLoading}
+                signedIn={signedIn}
               />}
             />
             <Route

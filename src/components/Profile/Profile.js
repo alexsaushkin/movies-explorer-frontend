@@ -41,13 +41,13 @@ export default function Profile({onUpdate, onSignOut, isLoading}) {
               className='profile__input'
               minLength='2'
               maxLength='30'
-              value={values.name || ''}
+              value={values.name || errors.name || ''}
               pattern={NAME_REGEX}
               onChange={handleChange}
               placeholder='Имя'
               disabled={!isEdit}
             />
-            <span className='profile__error name-input-error'>{errors.name}</span>
+            <span className='profile__error name-input-error'>{isValid ? '' : errors.name}</span>
           </div>
         </div>
         <div className='profile__input-container'>
@@ -59,12 +59,12 @@ export default function Profile({onUpdate, onSignOut, isLoading}) {
               id='email-input'
               required
               className='profile__input'
-              value={values.email || ''}
+              value={values.email || errors.email || ''}
               onChange={handleChange}
               placeholder='Email'
               disabled={!isEdit}
             />
-            <span className='profile__error email-input-error'>{errors.email}</span>
+            <span className='profile__error email-input-error'>{isValid ? '' : errors.email}</span>
           </div>
 
         </div>

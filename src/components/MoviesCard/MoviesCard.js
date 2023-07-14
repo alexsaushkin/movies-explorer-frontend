@@ -1,35 +1,39 @@
 import './MoviesCard.css'
 
-export default function MoviesCard({movie, isSaved, btnType, onBtnClick}) {
+export default function MoviesCard({movie, isSaved, image, btnType, onBtnClick}) {
 
   function getTime(minutes) {
     return `${Math.round(minutes / 60)}ч ${(minutes % 60)}м`
   }
 
+  function handleBtnClick() {
+    onBtnClick(movie);
+  }
+
   return (
-    <a className='movie-card'
-       href={movie.trailerLink}
-       target='_blank'
-       rel='noreferrer'
-    >
+    <div className='movie-card'>
       <div className='movie-card__info'>
-        <div>
+        <a
+          className='movie-card__link'
+          href={movie.trailerLink}
+          target='_blank'
+          rel='noreferrer'>
           <h3 className='movie-card__title'>{movie.nameRU}</h3>
           <p className='movie-card__time'>{getTime(movie.duration)}</p>
-        </div>
+        </a>
         <button
           className={`movie-card__btn movie-card__btn_type_${btnType}
           ${isSaved && btnType === 'save' ? 'movie-card__btn_active' : ''}`}
           type='button'
-          onClick={onBtnClick}
+          onClick={handleBtnClick}
         >
         </button>
       </div>
       <img
         className='movie-card__preview'
-        src={`https://api.nomoreparties.co${movie.image.url}`}
+        src={image}
         alt={movie.nameRU}
       />
-    </a>
+    </div>
   );
 }
