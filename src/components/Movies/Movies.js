@@ -20,10 +20,11 @@ export default function Movies({savedMovies, onSearch, onSave, onDelete, isLoadi
     (movies, searchText) => {
       const foundMovies = handleFilterMovieNames(movies, searchText);
       setFoundMovies(foundMovies);
-      localStorage.setItem('movies', JSON.stringify(foundMovies));
+
       if (!foundMovies.length) {
         setNotFound(true);
         setResultMovies(foundMovies);
+        localStorage.setItem('movies', JSON.stringify(foundMovies));
       } else {
         if (isCheckOn) {
           const shortMovies = handleFilterMovieDuration(foundMovies);
@@ -31,8 +32,10 @@ export default function Movies({savedMovies, onSearch, onSave, onDelete, isLoadi
             setNotFound(true);
           }
           setResultMovies(shortMovies);
+          localStorage.setItem('movies', JSON.stringify(shortMovies));
         } else {
           setResultMovies(foundMovies);
+          localStorage.setItem('movies', JSON.stringify(foundMovies));
         }
       }
 
@@ -65,10 +68,12 @@ export default function Movies({savedMovies, onSearch, onSave, onDelete, isLoadi
           setNotFound(true);
         }
         setResultMovies(movies);
+        localStorage.setItem('movies', JSON.stringify(movies));
       } else {
         if (!foundMovies.length) {
           setNotFound(true);
         }
+        localStorage.setItem('movies', JSON.stringify(foundMovies));
         setResultMovies(foundMovies);
       }
 
