@@ -77,6 +77,7 @@ export default function SavedMovies({savedMovies, onDelete, error}) {
       <SearchForm
         onSubmit={handleSubmit}
         onFilterChange={onFilterChange}
+        isSaved={true}
       />
       <MoviesCardList
         movies={resultMovies}

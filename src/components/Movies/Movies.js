@@ -1,4 +1,4 @@
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
@@ -13,12 +13,14 @@ export default function Movies({savedMovies, onSearch, onSave, onDelete, isLoadi
   const [resultMovies, setResultMovies] = useState([]);
   // чекбокс миниатюр
   const [isCheckOn, setIsCheckOn] = useState(false);
+  const [filterText, setFilterText] = useState('');
   const [notFound, setNotFound] = useState(false);
 
   const handleSearchMovies = useCallback(
     (movies, searchText) => {
       const foundMovies = handleFilterMovieNames(movies, searchText);
       setFoundMovies(foundMovies);
+      localStorage.setItem('movies', JSON.stringify(foundMovies));
       if (!foundMovies.length) {
         setNotFound(true);
         setResultMovies(foundMovies);
@@ -38,6 +40,7 @@ export default function Movies({savedMovies, onSearch, onSave, onDelete, isLoadi
   );
 
   const handleSubmit = useCallback(async (search) => {
+      localStorage.setItem('filterText', search);
       setNotFound(false);
       if (!allMovies.length) {
         const moviesData = await onSearch();
@@ -55,6 +58,7 @@ export default function Movies({savedMovies, onSearch, onSave, onDelete, isLoadi
     (isChecked) => {
       setIsCheckOn(isChecked);
       setNotFound(false);
+      localStorage.setItem('checkBox', isChecked);
       if (isChecked) {
         const movies = handleFilterMovieDuration(foundMovies);
         if (!movies.length) {
@@ -72,11 +76,22 @@ export default function Movies({savedMovies, onSearch, onSave, onDelete, isLoadi
     }, [foundMovies]
   )
 
+  useEffect(() => {
+    if (localStorage.getItem('searchText') && localStorage.getItem('checkBox')) {
+      setIsCheckOn(JSON.parse(localStorage.getItem('checkBox')));
+      if (localStorage.getItem('movies')) {
+        setResultMovies(JSON.parse(localStorage.getItem('movies')));
+      }
+      setFilterText(JSON.parse(localStorage.getItem('filterText')));
+    }
+  }, [])
+
   return (
     <main className='movies'>
       <SearchForm
         onSubmit={handleSubmit}
         onFilterChange={onFilterChange}
+        isSaved={false}
       />
       {isLoading && <Preloader/>}
       {!isLoading && <MoviesCardList

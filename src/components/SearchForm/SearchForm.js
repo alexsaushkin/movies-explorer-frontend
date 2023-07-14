@@ -2,13 +2,21 @@ import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 import './SearchForm.css';
 import {useEffect, useState} from "react";
 
-export default function SearchForm({onSubmit, onFilterChange}) {
+export default function SearchForm({onSubmit, onFilterChange, isSaved}) {
   const [searchText, setSearchText] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
     setError('');
   }, [searchText]);
+
+  useEffect(() => {
+    if (!isSaved) {
+      setSearchText(localStorage.getItem('filterText') || '');
+    } else {
+      setSearchText('');
+    }
+  }, [isSaved])
 
   function handleTextChange(e) {
     setError('');
@@ -47,6 +55,7 @@ export default function SearchForm({onSubmit, onFilterChange}) {
         </div>
         <FilterCheckbox
           onFilterChange={onFilterChange}
+          isSaved={isSaved}
         />
       </form>
       <span className='search__error'>{error}</span>

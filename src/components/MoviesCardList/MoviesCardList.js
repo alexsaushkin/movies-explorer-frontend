@@ -36,8 +36,13 @@ export default function MoviesCardList({
       setVisibleMovies(movies);
     } else {
       // обрезать количество в зависимости от разрешения
-      const resMovies = movies.slice(0, 12);
-      setVisibleMovies(resMovies);
+      if (localStorage.getItem('movies')) {
+        const resMovies = JSON.parse(localStorage.getItem('movies')).slice(0, 12);
+        setVisibleMovies(resMovies);
+      } else {
+        const resMovies = movies.slice(0, 12);
+        setVisibleMovies(resMovies);
+      }
     }
   }, [movies, isSaved]);
 
