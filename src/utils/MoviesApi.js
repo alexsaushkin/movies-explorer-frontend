@@ -24,7 +24,16 @@ class MoviesApi{
   }
 
   getMovies() {
-    return this._get('beatfilm-movies');
+    if (localStorage.getItem('allMovies')) {
+      console.log(localStorage.getItem('allMovies'));
+      return JSON.parse(localStorage.getItem('allMovies'));
+    } else {
+      this._get('beatfilm-movies')
+        .then((data) => {
+          localStorage.setItem('allMovies', JSON.stringify(data))
+          return data;
+        })
+    }
   }
 }
 

@@ -22,7 +22,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   const [savedMovies, setSavedMovies] = useState([]);
-  const [error, setError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -39,7 +39,7 @@ function App() {
         }
       }
     } catch (error) {
-      setError(error);
+      setErrorMessage(error);
     } finally {
       setIsLoading(false);
     }
@@ -55,7 +55,7 @@ function App() {
         navigate('/movies', {replace: true});
       }
     } catch (error) {
-      setError(error);
+      setErrorMessage(error);
     } finally {
       setIsLoading(false);
     }
@@ -73,7 +73,7 @@ function App() {
         navigate('/', {replace: true});
       }
     } catch (error) {
-      setError(error);
+      setErrorMessage(error);
     }
   }
 
@@ -83,10 +83,11 @@ function App() {
     try {
       const userInfo = await mainApi.updateUser({name, email});
       if (userInfo) {
-        setCurrentUser(userInfo)
+        setCurrentUser(userInfo);
+        return 'Успешно!'
       }
     } catch (error) {
-      setError(error);
+      setErrorMessage(error);
     } finally {
       setIsLoading(false);
     }
@@ -100,7 +101,7 @@ function App() {
         setCurrentUser(userInfo);
       }
     } catch (error) {
-      setError(error);
+      setErrorMessage(error);
     }
   }, [])
 
@@ -112,7 +113,7 @@ function App() {
         return moviesData;
       }
     } catch (error) {
-      setError(error);
+      setErrorMessage(error);
     } finally {
       setIsLoading(false);
     }
@@ -125,7 +126,7 @@ function App() {
         setSavedMovies(moviesData);
       }
     } catch (error) {
-      setError(error);
+      setErrorMessage(error);
     }
   }, [])
 
@@ -148,7 +149,7 @@ function App() {
         setSavedMovies([movieData, ...savedMovies]);
       }
     } catch (error) {
-      setError(error);
+      setErrorMessage(error);
     }
   }
 
@@ -160,7 +161,7 @@ function App() {
         setSavedMovies((state) => state.filter((foundMovie) => (foundMovie._id !== hasMovie._id)))
       }
     } catch (error) {
-      setError(error);
+      setErrorMessage(error);
     }
   }
 
@@ -190,7 +191,7 @@ function App() {
                 onSave={onSave}
                 onDelete={onDelete}
                 isLoading={isLoading}
-                error={error}
+                error={errorMessage}
                 signedIn={signedIn}
               />}
             />
@@ -200,7 +201,7 @@ function App() {
                 element={SavedMovies}
                 savedMovies={savedMovies}
                 onDelete={onDelete}
-                error={error}
+                error={errorMessage}
                 signedIn={signedIn}
               />}
             />
@@ -212,6 +213,7 @@ function App() {
                 onSignOut={handleSignOut}
                 isLoading={isLoading}
                 signedIn={signedIn}
+                errorMessage={errorMessage}
               />}
             />
             <Route
@@ -231,11 +233,6 @@ function App() {
               />}
             />
             <Route path='/*' element={<NotFound/>}/>
-
-            <Route
-              path='/'
-              element={signedIn ? <Navigate to='/'/> : <Navigate to='/signin'/>}
-            />
           </Routes>
         </div>
         <Footer/>

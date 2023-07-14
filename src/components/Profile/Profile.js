@@ -4,25 +4,42 @@ import './Profile.css';
 import useFormWithValidation from "../../utils/useFormWithValidation";
 import {NAME_REGEX} from "../../utils/constants";
 
-export default function Profile({onUpdate, onSignOut, isLoading}) {
+export default function Profile({onUpdate, onSignOut, isLoading, errorMessage}) {
   const currentUser = useContext(CurrentUserContext);
   const {values, handleChange, errors, isValid, resetForm} = useFormWithValidation();
+  const [oldEmail, setOldEmail] = useState('');
+  const [oldName, setOldName] = useState('');
+  const [isEqual, setIsEqual] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
+  const [message, setMessage] = useState('');
 
   function handleIsEditClick() {
+    setOldEmail(values.email);
+    setOldName(values.name);
     setIsEdit(!isEdit);
+    setMessage('');
   }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    onUpdate(values);
+    onUpdate(values)
+      .then((data) => setMessage(data))
+      .catch((err) => setMessage(err || errorMessage))
     setIsEdit(!isEdit);
   }
 
   useEffect(() => {
     resetForm(currentUser, {}, true)
   }, [resetForm, currentUser]);
+
+  useEffect(() => {
+    if (values.name !== oldName || values.email !== oldEmail) {
+      setIsEqual(false);
+    } else {
+      setIsEqual(true);
+    }
+  }, [values, oldName, oldEmail])
 
   return (
     <main className='profile'>
@@ -41,7 +58,7 @@ export default function Profile({onUpdate, onSignOut, isLoading}) {
               className='profile__input'
               minLength='2'
               maxLength='30'
-              value={values.name || errors.name || ''}
+              value={values.name || ''}
               pattern={NAME_REGEX}
               onChange={handleChange}
               placeholder='Имя'
@@ -59,7 +76,7 @@ export default function Profile({onUpdate, onSignOut, isLoading}) {
               id='email-input'
               required
               className='profile__input'
-              value={values.email || errors.email || ''}
+              value={values.email || ''}
               onChange={handleChange}
               placeholder='Email'
               disabled={!isEdit}
@@ -68,9 +85,10 @@ export default function Profile({onUpdate, onSignOut, isLoading}) {
           </div>
 
         </div>
+        <p className='profile__error'>{message}</p>
         <button
           type='submit'
-          disabled={!isValid}
+          disabled={!isValid || isEqual}
           className={`profile__submit-btn ${isEdit ? '' : 'profile__submit-btn_hidden'}`}
         >
           Сохранить
