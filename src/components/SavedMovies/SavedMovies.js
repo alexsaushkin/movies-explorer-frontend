@@ -5,8 +5,6 @@ import {handleFilterMovieNames, handleFilterMovieDuration} from '../../utils/Mov
 
 
 export default function SavedMovies({savedMovies, onDelete, error}) {
-  // все фильмы
-  const [allMovies, setAllMovies] = useState([]);
   const [foundMovies, setFoundMovies] = useState([]);
   const [resultMovies, setResultMovies] = useState([]);
   // чекбокс миниатюр
@@ -37,15 +35,8 @@ export default function SavedMovies({savedMovies, onDelete, error}) {
 
   const handleSubmit = useCallback(async (search) => {
       setNotFound(false);
-      if (!allMovies.length) {
-        if (savedMovies) {
-          setAllMovies(savedMovies);
-          handleSearchMovies(savedMovies, search);
-        }
-      } else {
-        handleSearchMovies(allMovies, search)
-      }
-    }, [allMovies, handleSearchMovies, savedMovies]
+      handleSearchMovies(savedMovies, search);
+    }, [handleSearchMovies, savedMovies]
   )
 
   const onFilterChange = useCallback(
