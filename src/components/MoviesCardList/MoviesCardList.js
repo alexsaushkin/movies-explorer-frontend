@@ -78,7 +78,7 @@ export default function MoviesCardList({
           isSaved={handleIsSavedMovie(savedMovies, movie)}
           image={!isSaved ? `https://api.nomoreparties.co${movie.image.url}` : `${movie.image}`}
           btnType={isSaved ? 'delete' : 'save'}
-          onBtnClick={isSaved ? onDelete : onSave}
+          onBtnClick={handleIsSavedMovie(savedMovies, movie) ? onDelete : onSave}
         />
       </li>
     );

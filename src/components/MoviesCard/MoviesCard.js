@@ -29,11 +29,19 @@ export default function MoviesCard({movie, isSaved, image, btnType, onBtnClick})
         >
         </button>
       </div>
-      <img
-        className='movie-card__preview'
-        src={image}
-        alt={movie.nameRU}
-      />
+      <a
+        className='movie-card__link'
+        href={movie.trailerLink}
+        target='_blank'
+        rel='noreferrer'
+      >
+        <img
+          className='movie-card__preview'
+          src={image}
+          alt={movie.nameRU}
+        />
+      </a>
+
     </div>
   );
 }
