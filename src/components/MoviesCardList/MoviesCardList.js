@@ -50,12 +50,9 @@ export default function MoviesCardList({
   }, [cardSlice, movies, isSaved]);
 
   useEffect(() => {
-    console.log(visibleMovies.length, movies.length)
     if (visibleMovies.length < movies.length) {
-      console.log('show')
       setVisibleBtn(true);
     } else {
-      console.log('ne show')
       setVisibleBtn(false);
     }
   }, [movies, visibleBtn, visibleMovies])

@@ -25,7 +25,6 @@ class MoviesApi{
 
   getMovies() {
     if (localStorage.getItem('allMovies')) {
-      console.log(localStorage.getItem('allMovies'));
       return JSON.parse(localStorage.getItem('allMovies'));
     } else {
       this._get('beatfilm-movies')
