@@ -19,7 +19,7 @@ function App() {
   const navigate = useNavigate();
 
   const [signedIn, setSignedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({name: '', email: ''});
+  const [currentUser, setCurrentUser] = useState({});
 
   const [savedMovies, setSavedMovies] = useState([]);
   const [error, setError] = useState('');
@@ -50,7 +50,6 @@ function App() {
     setIsLoading(true);
     try {
       const userInfo = await mainApi.signin({email, password})
-      console.log(userInfo);
       if (userInfo) {
         setSignedIn(true);
         navigate('/movies', {replace: true});
