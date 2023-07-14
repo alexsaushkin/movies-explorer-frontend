@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {Routes, Route, useNavigate, Navigate} from 'react-router-dom';
+import {Routes, Route, useNavigate} from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';

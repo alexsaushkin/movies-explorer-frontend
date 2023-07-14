@@ -1,6 +1,7 @@
 .not-found {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .not-found__title {
@@ -35,6 +36,9 @@
 }
 
 .not-found__link {
+  border: none;
+  background: none;
+  width: fit-content;
   color: #3456F3;
   text-align: center;
   font-size: 14px;
