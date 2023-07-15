@@ -82,12 +82,18 @@ export default function Movies({savedMovies, onSearch, onSave, onDelete, isLoadi
   )
 
   useEffect(() => {
-    if (localStorage.getItem('searchText') && localStorage.getItem('checkBox')) {
+    if (localStorage.getItem('filterText') && localStorage.getItem('checkBox')) {
       setIsCheckOn(JSON.parse(localStorage.getItem('checkBox')));
       if (localStorage.getItem('movies')) {
         setResultMovies(JSON.parse(localStorage.getItem('movies')));
       }
-      setFilterText(JSON.parse(localStorage.getItem('filterText')));
+      const text = localStorage.getItem('filterText');
+      setFilterText(text);
+      if (localStorage.getItem('allMovies')) {
+        const allMovies = JSON.parse(localStorage.getItem('allMovies'));
+        setAllMovies(allMovies);
+        setFoundMovies(handleFilterMovieNames(allMovies, text))
+      }
     }
   }, [])
 
