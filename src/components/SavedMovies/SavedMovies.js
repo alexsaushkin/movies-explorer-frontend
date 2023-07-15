@@ -61,7 +61,6 @@ export default function SavedMovies({savedMovies, onDelete, error}) {
   )
 
   useEffect(() => {
-    setNotFound(false);
     const foundMovies = handleFilterMovieNames(savedMovies, searchText);
     setFoundMovies(foundMovies);
     if (isCheckOn) {
