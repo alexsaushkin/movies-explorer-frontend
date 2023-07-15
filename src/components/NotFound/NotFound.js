@@ -4,7 +4,7 @@ import './NotFound.css';
 
 export default function NotFound() {
   const navigate = useNavigate();
-  const doesAnyHistoryEntryExist = window.history.state && window.history.state.idx > 0;
+  const doesAnyHistoryEntryExist = window.history.state;
 
 	function goBack() {
     if (doesAnyHistoryEntryExist) {

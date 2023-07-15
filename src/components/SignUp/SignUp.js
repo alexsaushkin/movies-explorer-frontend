@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 import useFormWithValidation from "../../utils/useFormWithValidation";
 import {NAME_REGEX} from "../../utils/constants";

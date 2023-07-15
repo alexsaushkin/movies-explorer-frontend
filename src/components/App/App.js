@@ -10,6 +10,7 @@ import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
 import NotFound from '../NotFound/NotFound';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import Preloader from '../Preloader/Preloader';
 import mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
@@ -24,18 +25,18 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isChecking, setIsChecking] = useState(true);
 
   // регистрация пользователя
-  async function handleSignUp({name, email, password}) {
+  async function handleSignUp({ name, email, password }) {
     setIsLoading(true);
     try {
-      const userInfo = await mainApi.signup({name, email, password});
+      const userInfo = await mainApi.signup({ name, email, password });
       if (userInfo) {
-        const userSignInInfo = await mainApi.signin({email, password})
+        const userSignInInfo = await mainApi.signin({ email, password });
         if (userSignInInfo) {
           setSignedIn(true);
-          navigate('/movies', {replace: true});
+          navigate('/movies', { replace: true });
         }
       }
     } catch (error) {
@@ -46,13 +47,13 @@ function App() {
   }
 
   // вход пользователя
-  async function handleSignIn({email, password}) {
+  async function handleSignIn({ email, password }) {
     setIsLoading(true);
     try {
-      const userInfo = await mainApi.signin({email, password})
+      const userInfo = await mainApi.signin({ email, password });
       if (userInfo) {
         setSignedIn(true);
-        navigate('/movies', {replace: true});
+        navigate('/movies', { replace: true });
       }
     } catch (error) {
       setErrorMessage(error);
@@ -64,13 +65,13 @@ function App() {
   // выход пользователя
   async function handleSignOut() {
     try {
-      const userInfo = await mainApi.signout()
+      const userInfo = await mainApi.signout();
       if (userInfo) {
         setSignedIn(false);
         setCurrentUser({});
         setSavedMovies([]);
         localStorage.clear();
-        navigate('/', {replace: true});
+        navigate('/', { replace: true });
       }
     } catch (error) {
       setErrorMessage(error);
@@ -78,13 +79,13 @@ function App() {
   }
 
   // обновление данных пользователя
-  async function handleUpdateUser({name, email}) {
+  async function handleUpdateUser({ name, email }) {
     setIsLoading(true);
     try {
-      const userInfo = await mainApi.updateUser({name, email});
+      const userInfo = await mainApi.updateUser({ name, email });
       if (userInfo) {
         setCurrentUser(userInfo);
-        return 'Успешно!'
+        return 'Успешно!';
       }
     } catch (error) {
       setErrorMessage(error);
@@ -102,8 +103,10 @@ function App() {
       }
     } catch (error) {
       setErrorMessage(error);
+    } finally {
+      setIsChecking(false);
     }
-  }, [])
+  }, []);
 
   async function getMovies() {
     setIsLoading(true);
@@ -128,7 +131,7 @@ function App() {
     } catch (error) {
       setErrorMessage(error);
     }
-  }, [])
+  }, []);
 
   async function onSave(movie) {
     try {
@@ -144,7 +147,7 @@ function App() {
         movieId: movie.id,
         nameRU: movie.nameRU,
         nameEN: movie.nameEN,
-      })
+      });
       if (movieData) {
         setSavedMovies([movieData, ...savedMovies]);
       }
@@ -154,11 +157,16 @@ function App() {
   }
 
   async function onDelete(movie) {
-    const hasMovie = savedMovies.find((foundMovie) => foundMovie.movieId === movie.id || foundMovie.movieId === movie.movieId);
+    const hasMovie = savedMovies.find(
+      (foundMovie) =>
+        foundMovie.movieId === movie.id || foundMovie.movieId === movie.movieId
+    );
     try {
       const deletedMovie = await mainApi.deleteMovie(hasMovie._id);
       if (deletedMovie) {
-        setSavedMovies((state) => state.filter((foundMovie) => (foundMovie._id !== hasMovie._id)))
+        setSavedMovies((state) =>
+          state.filter((foundMovie) => foundMovie._id !== hasMovie._id)
+        );
       }
     } catch (error) {
       setErrorMessage(error);
@@ -167,7 +175,7 @@ function App() {
 
   useEffect(() => {
     checkSignedIn();
-  }, [signedIn, checkSignedIn]);
+  }, [checkSignedIn]);
 
   useEffect(() => {
     if (signedIn) {
@@ -176,68 +184,83 @@ function App() {
   }, [signedIn, getSavedMovies]);
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <div className='app'>
-        <div>
-          <Header signedIn={signedIn}/>
-          <Routes>
-            <Route path='/' element={<Main/>}/>
-            <Route
-              path='/movies'
-              element={<ProtectedRoute
-                element={Movies}
-                savedMovies={savedMovies}
-                onSearch={getMovies}
-                onSave={onSave}
-                onDelete={onDelete}
-                isLoading={isLoading}
-                error={errorMessage}
-                signedIn={signedIn}
-              />}
-            />
-            <Route
-              path='/saved-movies'
-              element={<ProtectedRoute
-                element={SavedMovies}
-                savedMovies={savedMovies}
-                onDelete={onDelete}
-                error={errorMessage}
-                signedIn={signedIn}
-              />}
-            />
-            <Route
-              path='/profile'
-              element={<ProtectedRoute
-                element={Profile}
-                onUpdate={handleUpdateUser}
-                onSignOut={handleSignOut}
-                isLoading={isLoading}
-                signedIn={signedIn}
-                errorMessage={errorMessage}
-              />}
-            />
-            <Route
-              path='/signin'
-              element={<SignIn
-                handleSignIn={handleSignIn}
-                signedIn={signedIn}
-                isLoading={isLoading}
-              />}
-            />
-            <Route
-              path='/signup'
-              element={<SignUp
-                handleSignUp={handleSignUp}
-                signedIn={signedIn}
-                isLoading={isLoading}
-              />}
-            />
-            <Route path='/*' element={<NotFound/>}/>
-          </Routes>
-        </div>
-        <Footer/>
-      </div>
-    </CurrentUserContext.Provider>
+    <div className='app'>
+      {isChecking ? (
+        <Preloader />
+      ) : (
+        <CurrentUserContext.Provider value={currentUser}>
+          <div>
+            <Header signedIn={signedIn} />
+            <Routes>
+              <Route path='/' element={<Main />} />
+              <Route
+                path='/movies'
+                element={
+                  <ProtectedRoute
+                    element={Movies}
+                    savedMovies={savedMovies}
+                    onSearch={getMovies}
+                    onSave={onSave}
+                    onDelete={onDelete}
+                    isLoading={isLoading}
+                    error={errorMessage}
+                    signedIn={signedIn}
+                  />
+                }
+              />
+              <Route
+                path='/saved-movies'
+                element={
+                  <ProtectedRoute
+                    element={SavedMovies}
+                    savedMovies={savedMovies}
+                    onDelete={onDelete}
+                    isLoading={isLoading}
+                    error={errorMessage}
+                    signedIn={signedIn}
+                  />
+                }
+              />
+              <Route
+                path='/profile'
+                element={
+                  <ProtectedRoute
+                    element={Profile}
+                    onUpdate={handleUpdateUser}
+                    onSignOut={handleSignOut}
+                    isLoading={isLoading}
+                    signedIn={signedIn}
+                    errorMessage={errorMessage}
+                  />
+                }
+              />
+              <Route
+                path='/signin'
+                element={
+                  <SignIn
+                    handleSignIn={handleSignIn}
+                    signedIn={signedIn}
+                    isLoading={isLoading}
+                  />
+                }
+              />
+              <Route
+                path='/signup'
+                element={
+                  <SignUp
+                    handleSignUp={handleSignUp}
+                    signedIn={signedIn}
+                    isLoading={isLoading}
+                  />
+                }
+              />
+              <Route path='/*' element={<NotFound />} />
+            </Routes>
+          </div>
+          <Footer />
+        </CurrentUserContext.Provider>
+      )}
+    </div>
   );
 }
 
