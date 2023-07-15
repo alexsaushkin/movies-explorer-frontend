@@ -60,8 +60,12 @@ export default function SavedMovies({savedMovies, onDelete, error}) {
 
   useEffect(() => {
     setFoundMovies(savedMovies);
-    setResultMovies(savedMovies);
-  }, [savedMovies])
+    if (isCheckOn) {
+      setResultMovies(handleFilterMovieDuration(savedMovies));
+    } else {
+      setResultMovies(savedMovies);
+    }
+  }, [savedMovies, isCheckOn])
 
   return (
     <main className='movies'>
