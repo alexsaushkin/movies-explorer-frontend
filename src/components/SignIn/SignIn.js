@@ -1,16 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 import useFormWithValidation from "../../utils/useFormWithValidation";
 import {Navigate} from "react-router-dom";
 
 
-export default function SignIp({handleSignIn, signedIn, isLoading}) {
+export default function SignIp({handleSignIn, signedIn, isLoading, errorMessage, setErrorMessage}) {
   const {values, handleChange, errors, isValid} = useFormWithValidation();
 
   function onSignIn(e) {
     e.preventDefault();
     handleSignIn(values);
   }
+
+  useEffect(() => {
+    setErrorMessage('');
+  }, [])
 
   return (
     <>
@@ -23,6 +27,8 @@ export default function SignIp({handleSignIn, signedIn, isLoading}) {
         linkTo='/signup'
         linkText='Регистрация'
         isValid={isValid}
+        isLoading={isLoading}
+        errorMessage={errorMessage}
       >
         <>
           <div className='auth__input-container'>
@@ -36,6 +42,7 @@ export default function SignIp({handleSignIn, signedIn, isLoading}) {
               value={values.email || ''}
               onChange={handleChange}
               placeholder='Email'
+              disabled={isLoading ? true : false}
             />
             <span className='auth__error email-input-error'>{errors.email}</span>
           </div>
@@ -50,6 +57,7 @@ export default function SignIp({handleSignIn, signedIn, isLoading}) {
               value={values.password || ''}
               onChange={handleChange}
               placeholder='Пароль'
+              disabled={isLoading ? true : false}
             />
             <span className='auth__error password-input-error'>{errors.password}</span>
           </div>

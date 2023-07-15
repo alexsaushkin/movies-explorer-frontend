@@ -4,7 +4,7 @@ import './Profile.css';
 import useFormWithValidation from "../../utils/useFormWithValidation";
 import {NAME_REGEX} from "../../utils/constants";
 
-export default function Profile({onUpdate, onSignOut, isLoading, errorMessage}) {
+export default function Profile({onUpdate, onSignOut, isLoading, errorMessage, setErrorMessage}) {
   const currentUser = useContext(CurrentUserContext);
   const {values, handleChange, errors, isValid, resetForm} = useFormWithValidation();
   const [oldEmail, setOldEmail] = useState('');
@@ -24,9 +24,13 @@ export default function Profile({onUpdate, onSignOut, isLoading, errorMessage}) 
     e.preventDefault();
 
     onUpdate(values)
-      .then((data) => setMessage(data))
-      .catch((err) => setMessage(err || errorMessage))
-    setIsEdit(!isEdit);
+      .then((data) => {
+        if (data) {
+          setIsEdit(!isEdit);
+        }
+        setMessage(data);
+      })
+
   }
 
   useEffect(() => {
@@ -40,6 +44,10 @@ export default function Profile({onUpdate, onSignOut, isLoading, errorMessage}) 
       setIsEqual(true);
     }
   }, [values, oldName, oldEmail])
+
+  useEffect(() => {
+    setErrorMessage('');
+  }, [])
 
   return (
     <main className='profile'>
@@ -62,7 +70,7 @@ export default function Profile({onUpdate, onSignOut, isLoading, errorMessage}) 
               pattern={NAME_REGEX}
               onChange={handleChange}
               placeholder='Имя'
-              disabled={!isEdit}
+              disabled={!isEdit || isLoading}
             />
             <span className='profile__error name-input-error'>{isValid ? '' : errors.name}</span>
           </div>
@@ -79,16 +87,16 @@ export default function Profile({onUpdate, onSignOut, isLoading, errorMessage}) 
               value={values.email || ''}
               onChange={handleChange}
               placeholder='Email'
-              disabled={!isEdit}
+              disabled={!isEdit || isLoading}
             />
             <span className='profile__error email-input-error'>{isValid ? '' : errors.email}</span>
           </div>
 
         </div>
-        <p className='profile__error'>{message}</p>
+        <p className='profile__error'>{message || errorMessage}</p>
         <button
           type='submit'
-          disabled={!isValid || isEqual}
+          disabled={!isValid || isEqual || isLoading}
           className={`profile__submit-btn ${isEdit ? '' : 'profile__submit-btn_hidden'}`}
         >
           Сохранить

@@ -12,6 +12,8 @@ export default function AuthForm({
   linkTo,
   linkText,
   isValid,
+  isLoading,
+  errorMessage,
   children,
 }) {
 
@@ -24,7 +26,8 @@ export default function AuthForm({
         onSubmit={onSubmit}
       >
         {children}
-        <button type='submit' className='auth__submit-btn' disabled={!isValid}>
+        <p className='auth__error'>{errorMessage}</p>
+        <button type='submit' className='auth__submit-btn' disabled={!isValid || isLoading}>
           {btnText}
         </button>
       </form>

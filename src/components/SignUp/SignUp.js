@@ -1,17 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 import useFormWithValidation from "../../utils/useFormWithValidation";
 import {NAME_REGEX} from "../../utils/constants";
 import {Navigate} from "react-router-dom";
 
 
-export default function SignUp({handleSignUp, signedIn, isLoading}) {
+export default function SignUp({handleSignUp, signedIn, isLoading, errorMessage, setErrorMessage}) {
   const {values, handleChange, errors, isValid} = useFormWithValidation();
 
   function onSignUp(e) {
     e.preventDefault();
     handleSignUp(values);
   }
+
+  useEffect(() => {
+    setErrorMessage('');
+  }, [])
 
   return (
     <>
@@ -24,6 +28,8 @@ export default function SignUp({handleSignUp, signedIn, isLoading}) {
         linkTo='/signin'
         linkText='Войти'
         isValid={isValid}
+        isLoading={isLoading}
+        errorMessage={errorMessage}
       >
         <>
           <div className='auth__input-container'>
@@ -40,6 +46,7 @@ export default function SignUp({handleSignUp, signedIn, isLoading}) {
               pattern={NAME_REGEX}
               onChange={handleChange}
               placeholder='Имя'
+              disabled={isLoading ? true : false}
             />
             <span className='auth__error name-input-error'>{errors.name}</span>
           </div>
@@ -54,6 +61,7 @@ export default function SignUp({handleSignUp, signedIn, isLoading}) {
               value={values.email || ''}
               onChange={handleChange}
               placeholder='Email'
+              disabled={isLoading ? true : false}
             />
             <span className='auth__error email-input-error'>{errors.email}</span>
           </div>
@@ -68,6 +76,7 @@ export default function SignUp({handleSignUp, signedIn, isLoading}) {
               value={values.password || ''}
               onChange={handleChange}
               placeholder='Пароль'
+              disabled={isLoading ? true : false}
             />
             <span className='auth__error password-input-error'>{errors.password}</span>
           </div>

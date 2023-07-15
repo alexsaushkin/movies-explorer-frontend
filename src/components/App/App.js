@@ -29,6 +29,7 @@ function App() {
 
   // регистрация пользователя
   async function handleSignUp({ name, email, password }) {
+    setErrorMessage('');
     setIsLoading(true);
     try {
       const userInfo = await mainApi.signup({ name, email, password });
@@ -48,6 +49,7 @@ function App() {
 
   // вход пользователя
   async function handleSignIn({ email, password }) {
+    setErrorMessage('');
     setIsLoading(true);
     try {
       const userInfo = await mainApi.signin({ email, password });
@@ -64,6 +66,7 @@ function App() {
 
   // выход пользователя
   async function handleSignOut() {
+    setErrorMessage('');
     try {
       const userInfo = await mainApi.signout();
       if (userInfo) {
@@ -80,6 +83,7 @@ function App() {
 
   // обновление данных пользователя
   async function handleUpdateUser({ name, email }) {
+    setErrorMessage('');
     setIsLoading(true);
     try {
       const userInfo = await mainApi.updateUser({ name, email });
@@ -102,7 +106,7 @@ function App() {
         setCurrentUser(userInfo);
       }
     } catch (error) {
-      setErrorMessage(error);
+      console.log(error);
     } finally {
       setIsChecking(false);
     }
@@ -116,7 +120,7 @@ function App() {
         return moviesData;
       }
     } catch (error) {
-      setErrorMessage(error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -129,7 +133,7 @@ function App() {
         setSavedMovies(moviesData);
       }
     } catch (error) {
-      setErrorMessage(error);
+      console.log(error);
     }
   }, []);
 
@@ -152,7 +156,7 @@ function App() {
         setSavedMovies([movieData, ...savedMovies]);
       }
     } catch (error) {
-      setErrorMessage(error);
+      console.log(error);
     }
   }
 
@@ -169,8 +173,12 @@ function App() {
         );
       }
     } catch (error) {
-      setErrorMessage(error);
+      console.log(error);
     }
+  }
+
+  function handleSetErrorMessage(message) {
+    setErrorMessage(message);
   }
 
   useEffect(() => {
@@ -231,6 +239,7 @@ function App() {
                     isLoading={isLoading}
                     signedIn={signedIn}
                     errorMessage={errorMessage}
+                    setErrorMessage={handleSetErrorMessage}
                   />
                 }
               />
@@ -241,6 +250,8 @@ function App() {
                     handleSignIn={handleSignIn}
                     signedIn={signedIn}
                     isLoading={isLoading}
+                    errorMessage={errorMessage}
+                    setErrorMessage={handleSetErrorMessage}
                   />
                 }
               />
@@ -251,6 +262,8 @@ function App() {
                     handleSignUp={handleSignUp}
                     signedIn={signedIn}
                     isLoading={isLoading}
+                    errorMessage={errorMessage}
+                    setErrorMessage={handleSetErrorMessage}
                   />
                 }
               />
