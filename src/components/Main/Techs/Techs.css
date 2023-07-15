@@ -1,0 +1,114 @@
+.techs {
+  background-color: #F5F5F5;
+  padding: 100px 70px;
+}
+
+@media screen and (max-width: 984px) {
+  .techs {
+    padding: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .techs {
+    background-color: #FFFFFF;
+    padding: 70px 18px;
+  }
+}
+
+.techs__title {
+  text-align: center;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 58px;
+  letter-spacing: -2px;
+  margin: 90px auto 26px;
+}
+
+@media screen and (max-width: 984px) {
+  .techs__title {
+    margin-top: 80px;
+    margin-bottom: 22px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .techs__title {
+    margin-top: 60px;
+    margin-bottom: 24px;
+    font-size: 30px;
+    line-height: normal;
+    letter-spacing: -1.2px;
+  }
+}
+
+.techs__description {
+  max-width: 460px;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.56px;
+  margin: 0 auto 100px;
+}
+
+@media screen and (max-width: 984px) {
+  .techs__description {
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: -0.48px;
+    margin-bottom: 83px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .techs__description {
+    margin-bottom: 50px;
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: -0.44px;
+  }
+}
+
+.techs__skills {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media screen and (max-width: 700px) {
+  .techs__skills {
+    display: grid;
+    grid-template-columns: repeat(2, 90px);
+    gap: 10px;
+  }
+}
+
+.techs__skill {
+  border-radius: 10px;
+  background: #E8E8E8;
+  min-width: 90px;
+  text-align: center;
+  padding-top: 21px;
+  padding-bottom: 22px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.56px;
+}
+
+@media screen and (max-width: 984px) {
+  .techs__skill {
+    min-width: 84px;
+    font-size: 12px;
+    letter-spacing: -0.48px;
+  }
+}

@@ -1,0 +1,105 @@
+.movie-card {
+  background: #FDFDFD;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 30px 0 rgba(0, 0, 0, 0.08);
+  height: 271px;
+  overflow: hidden;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 700px) {
+  .movie-card {
+    box-shadow: none;
+    height: 236px;
+  }
+}
+
+.movie-card__info {
+  padding: 14px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movie-card__link {
+  text-decoration: none;
+  color: #000;
+  transition: opacity 0.3s ease-in;
+  cursor: pointer;
+}
+
+.movie-card__link:hover {
+  opacity: 0.7;
+}
+
+.movie-card__title {
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 0 0 9px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 280px;
+}
+
+@media screen and (max-width: 1250px) {
+  .movie-card__title {
+    max-width: 210px;
+  }
+}
+
+.movie-card__time {
+  color: #A0A0A0;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+}
+
+.movie-card__btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  align-self: center;
+  color: #FFFFFF;
+  transition: opacity 0.3s ease-in;
+  cursor: pointer;
+}
+
+.movie-card__btn:hover {
+  opacity: 0.8;
+}
+
+.movie-card__btn_type_delete {
+  background: url("../../images/d9-min.svg");
+}
+
+.movie-card__btn_type_save {
+  background: url("../../images/save9d-min.svg");
+}
+
+.movie-card__btn_active {
+  background: url("../../images/save9-min.svg");
+}
+
+.movie-card__preview {
+  height: 203px;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media screen and (max-width: 700px) {
+  .movie-card__preview {
+    height: 168px;
+  }
+}
