@@ -1,6 +1,16 @@
 import {useEffect, useState} from "react";
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Resize from "../../utils/Resize";
+import {
+  DESKTOP_WIDTH,
+  TABLET_WIDTH,
+  DESKTOP_CARD_SLICE,
+  DESKTOP_CARD_ROW,
+  TABLET_CARD_SLICE,
+  TABLET_CARD_ROW,
+  MOBILE_CARD_SLICE,
+  MOBILE_CARD_ROW
+} from "../../utils/constants";
 import './MoviesCardList.css';
 
 
@@ -15,8 +25,8 @@ export default function MoviesCardList({
                                        }) {
   const [visibleMovies, setVisibleMovies] = useState([]);
   const [visibleBtn, setVisibleBtn] = useState(false);
-  const [cardSlice, setCardSlice] = useState(12);
-  const [cardRow, setCardRow] = useState(3);
+  const [cardSlice, setCardSlice] = useState(DESKTOP_CARD_SLICE);
+  const [cardRow, setCardRow] = useState(DESKTOP_CARD_ROW);
   const winSize = Resize();
 
   // функция поиска в сохранённых
@@ -58,15 +68,15 @@ export default function MoviesCardList({
   }, [movies, visibleBtn, visibleMovies])
 
   useEffect(() => {
-    if (winSize >= 984) {
-      setCardSlice(12);
-      setCardRow(3);
-    } else if (winSize >= 700) {
-      setCardSlice(8);
-      setCardRow(2);
+    if (winSize >= DESKTOP_WIDTH) {
+      setCardSlice(DESKTOP_CARD_SLICE);
+      setCardRow(DESKTOP_CARD_ROW);
+    } else if (winSize >= TABLET_WIDTH) {
+      setCardSlice(TABLET_CARD_SLICE);
+      setCardRow(TABLET_CARD_ROW);
     } else {
-      setCardSlice(5);
-      setCardRow(1);
+      setCardSlice(MOBILE_CARD_SLICE);
+      setCardRow(MOBILE_CARD_ROW);
     }
   }, [winSize]);
 

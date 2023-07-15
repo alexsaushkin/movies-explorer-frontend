@@ -1,8 +1,10 @@
+  import { SHORT_MOVIE_DURATION } from "./constants";
+
   // функция фильтрации по времени
   export function handleFilterMovieDuration(movies) {
-    // отбираем только фильмы у которых длительность меньше или равна 40 минутам
+    // отбираем только фильмы у которых длительность меньше или равна длительности короткометражки
     return movies.filter((movie) => {
-      return movie.duration <= 40;
+      return movie.duration <= SHORT_MOVIE_DURATION;
     });
   }
 
