@@ -8,12 +8,14 @@ export default function SavedMovies({savedMovies, onDelete, error}) {
   const [foundMovies, setFoundMovies] = useState([]);
   const [resultMovies, setResultMovies] = useState([]);
   // чекбокс миниатюр
+  const [searchText, setSearchText] = useState('');
   const [isCheckOn, setIsCheckOn] = useState(false);
   const [notFound, setNotFound] = useState(false);
 
   const handleSearchMovies = useCallback(
     (movies, searchText) => {
       const foundMovies = handleFilterMovieNames(movies, searchText);
+      setSearchText(searchText);
       setFoundMovies(foundMovies);
       if (!foundMovies.length) {
         setNotFound(true);
@@ -59,13 +61,22 @@ export default function SavedMovies({savedMovies, onDelete, error}) {
   )
 
   useEffect(() => {
-    setFoundMovies(savedMovies);
+    setNotFound(false);
+    const foundMovies = handleFilterMovieNames(savedMovies, searchText);
+    setFoundMovies(foundMovies);
     if (isCheckOn) {
-      setResultMovies(handleFilterMovieDuration(savedMovies));
+      const res = handleFilterMovieDuration(foundMovies);
+      setResultMovies(res);
+      if (!res) {
+        setNotFound(true);
+      }
     } else {
-      setResultMovies(savedMovies);
+      setResultMovies(foundMovies);
+      if (!foundMovies) {
+        setNotFound(true);
+      }
     }
-  }, [savedMovies, isCheckOn])
+  }, [savedMovies, isCheckOn, searchText])
 
   return (
     <main className='movies'>
